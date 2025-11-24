@@ -10,7 +10,7 @@ interface CodeBlockProps {
   language?: string; // kept for backward compatibility but not used
 }
 
-export default function CodeBlock({ code, filename, children }: CodeBlockProps) {
+export default function CodeBlock({ code, filename, children, language }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const content = code || (typeof children === 'string' ? children : '');
 
