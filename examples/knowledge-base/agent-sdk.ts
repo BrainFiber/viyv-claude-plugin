@@ -328,7 +328,7 @@ const subscriptionSkill = {
 async function runScenario(
   scenarioNum: number,
   manager: Awaited<ReturnType<typeof createPluginManager>>,
-  pluginRefs: Array<{ type: string; path: string }>
+  pluginRefs: Array<{ type: 'local'; path: string }>
 ) {
   const scenario = scenarios.find((s) => s.id === scenarioNum);
   if (!scenario) {

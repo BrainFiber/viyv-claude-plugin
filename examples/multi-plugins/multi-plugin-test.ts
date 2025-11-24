@@ -18,7 +18,7 @@
 import { mkdtemp, rm, writeFile, mkdir } from 'fs/promises';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { createPluginManager, createAgentSdkPluginAdapter, ClaudePlugin } from '../../packages/core/dist/index.js';
+import { createPluginManager, createAgentSdkPluginAdapter, PluginMeta } from '../../packages/core/dist/index.js';
 import { query } from '@anthropic-ai/claude-agent-sdk';
 
 // プラグイン定義
@@ -339,7 +339,7 @@ export function formatDate(date: Date): string {
   );
 
   const manager = await createPluginManager();
-  const createdPlugins: ClaudePlugin[] = [];
+  const createdPlugins: PluginMeta[] = [];
 
   try {
     console.log('Creating 3 plugins...\n');
