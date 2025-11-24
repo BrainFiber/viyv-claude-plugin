@@ -15,5 +15,6 @@ export type { RegistrySchema } from './registry.js';
 export { REGISTRY_VERSION, createEmptyRegistry } from './registry.js';
 
 export type { SdkPluginRef } from './sdk.js';
+export type { MarketplaceSchema, MarketplacePluginEntry } from './marketplace.js';
 
 export type { ClaudePluginManager } from './manager.js';

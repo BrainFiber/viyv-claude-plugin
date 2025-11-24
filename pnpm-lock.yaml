@@ -118,6 +118,19 @@ importers:
         specifier: ^4.7.0
         version: 4.20.6
 
+  examples/default-path:
+    dependencies:
+      '@anthropic-ai/claude-agent-sdk':
+        specifier: ^0.1.50
+        version: 0.1.50(zod@3.25.76)
+      '@viyv-claude-plugin':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      tsx:
+        specifier: ^4.7.0
+        version: 4.20.6
+
   examples/forms-automation:
     dependencies:
       '@viyv-claude-plugin':

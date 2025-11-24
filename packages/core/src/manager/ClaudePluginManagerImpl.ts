@@ -12,6 +12,7 @@ import { RegistryManager } from '../registry/RegistryManager.js';
 import { PluginFileSystem } from '../filesystem/PluginFileSystem.js';
 import { PluginImporter } from '../filesystem/PluginImporter.js';
 import { validateSkillInput } from '../validators/skill.js';
+import { MarketplaceManager } from '../marketplace/MarketplaceManager.js';
 
 /**
  * Generate a slug from a name
@@ -30,11 +31,13 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
   private registry: RegistryManager;
   private fs: PluginFileSystem;
   private importer: PluginImporter;
+  private marketplace: MarketplaceManager;
 
   constructor(rootPath: string) {
     this.registry = new RegistryManager(rootPath);
     this.fs = new PluginFileSystem(rootPath);
     this.importer = new PluginImporter(rootPath);
+    this.marketplace = new MarketplaceManager(rootPath);
   }
 
   /**
@@ -135,6 +138,7 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
 
     // Add to registry
     await this.registry.addPlugin(meta);
+    await this.marketplace.upsertPlugin(meta, pluginJson);
 
     return meta;
   }
@@ -241,6 +245,8 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
     if (!updated) {
       throw new Error(`Failed to retrieve updated plugin "${id}"`);
     }
+    const latestPluginJson = await this.fs.readPluginJson(pluginPath);
+    await this.marketplace.upsertPlugin(updated, latestPluginJson);
 
     return updated;
   }
@@ -259,6 +265,7 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
 
     // Remove from registry
     await this.registry.removePlugin(id);
+    await this.marketplace.removePlugin(id);
   }
 
   /**
@@ -298,6 +305,7 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
 
     // Add to registry
     await this.registry.addPlugin(meta);
+    await this.marketplace.upsertPlugin(meta, pluginJson);
 
     return meta;
   }
@@ -343,6 +351,7 @@ export class ClaudePluginManagerImpl implements ClaudePluginManager {
 
       // Add to registry
       await this.registry.addPlugin(meta);
+      await this.marketplace.upsertPlugin(meta, pluginJson);
 
       // Clean up temp directory
       await this.importer.cleanup();

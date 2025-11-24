@@ -456,8 +456,10 @@ async function main() {
       }
     }
   } finally {
-    await manager.delete(plugin.id);
-    await rm(tempRoot, { recursive: true, force: true });
+    // await manager.delete(plugin.id);
+    // await rm(tempRoot, { recursive: true, force: true });
+    console.log('\n[DEBUG] Plugin kept at:', tempRoot);
+    console.log('[DEBUG] Plugin ID:', plugin.id);
   }
 }
 
