@@ -1,0 +1,244 @@
+.main {
+  padding: 8rem 0 4rem;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.label {
+  display: inline-block;
+  padding: 0.375rem 0.875rem;
+  background: var(--primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.section {
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sectionDesc {
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.sectionDesc code {
+  background: var(--muted);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.before,
+.after {
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+}
+
+.before {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.after {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.comparisonTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.beforeBadge,
+.afterBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+}
+
+.beforeBadge {
+  background: var(--error);
+  color: white;
+}
+
+.afterBadge {
+  background: var(--success);
+  color: white;
+}
+
+.problemList,
+.solutionList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.problemList li,
+.solutionList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+.problemList li::before {
+  content: '✗';
+  color: var(--error);
+  flex-shrink: 0;
+}
+
+.solutionList li::before {
+  content: '✓';
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.apiSection {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.apiName {
+  font-size: 1.125rem;
+  font-family: var(--font-fira-code);
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.apiDesc {
+  color: var(--muted-foreground);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.methodsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.methodsTable th,
+.methodsTable td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.methodsTable th {
+  background: var(--muted);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.methodsTable td code {
+  background: var(--terminal-bg);
+  color: var(--terminal-command);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+.methodsTable td:last-child {
+  color: var(--muted-foreground);
+}
+
+.configList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.configItem {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.configPriority {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.configItem h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.configItem code {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+}

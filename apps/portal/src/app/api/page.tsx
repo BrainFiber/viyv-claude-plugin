@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function ApiReference() {
@@ -6,7 +7,8 @@ export default function ApiReference() {
             <div className={styles.wrapper}>
                 <h1 className={styles.title}>API Reference</h1>
                 <p className={styles.lead}>
-                    Detailed documentation for the <code>ClaudePluginManager</code> class.
+                    <code>viyv-claude-plugin-core</code> パッケージの API ドキュメント。
+                    より詳細な Agent SDK 連携については <Link href="/agent-sdk">Agent SDK ページ</Link> を参照してください。
                 </p>
 
                 <section className={styles.section}>
@@ -108,6 +110,34 @@ type SkillInput = {
   createdAt: string;
   updatedAt: string;
 }`}</code></pre>
+                    </div>
+                </section>
+
+                <section className={styles.section}>
+                    <h2 className={styles.heading}>Agent SDK Adapter</h2>
+                    <p className={styles.text}>
+                        <code>createAgentSdkPluginAdapter</code> を使用すると、管理しているプラグインを
+                        Claude Agent SDK で直接使用できる形式に変換できます。
+                    </p>
+                    <div className={styles.typeBlock}>
+                        <h3>createAgentSdkPluginAdapter(manager)</h3>
+                        <pre><code>{`import { createPluginManager, createAgentSdkPluginAdapter } from 'viyv-claude-plugin-core';
+
+const manager = await createPluginManager();
+const adapter = createAgentSdkPluginAdapter(manager);
+
+// プラグインIDの配列から SDK 用参照を取得
+const plugins = await adapter.getSdkPlugins(['plugin-a', 'plugin-b']);
+// => [{ path: '/path/to/plugin-a' }, { path: '/path/to/plugin-b' }]`}</code></pre>
+                    </div>
+                    <div className={styles.typeBlock}>
+                        <h3>SdkPluginRef</h3>
+                        <pre><code>{`interface SdkPluginRef {
+  path: string;  // プラグインディレクトリへの絶対パス
+}`}</code></pre>
+                        <p className={styles.note}>
+                            この形式は Claude Agent SDK の <code>plugins</code> オプションに直接渡せます。
+                        </p>
                     </div>
                 </section>
             </div>

@@ -35,7 +35,8 @@ export default function Header() {
           <nav className={styles.nav}>
             <Link href="/getting-started" className={`${styles.link} ${pathname === '/getting-started' ? styles.active : ''}`}>Getting Started</Link>
             <Link href="/cli" className={`${styles.link} ${pathname === '/cli' ? styles.active : ''}`}>CLI</Link>
-            <Link href="/use-cases" className={`${styles.link} ${pathname === '/use-cases' ? styles.active : ''}`}>Use Cases</Link>
+            <Link href="/guide-plugin" className={`${styles.link} ${pathname === '/guide-plugin' ? styles.active : ''}`}>Guide Plugin</Link>
+            <Link href="/agent-sdk" className={`${styles.link} ${pathname === '/agent-sdk' ? styles.active : ''}`}>Agent SDK</Link>
             <Link href="/api" className={`${styles.link} ${pathname === '/api' ? styles.active : ''}`}>API</Link>
           </nav>
 
@@ -73,7 +74,8 @@ export default function Header() {
         <nav className={styles.mobileNav}>
           <Link href="/getting-started" className={styles.mobileLink}>Getting Started</Link>
           <Link href="/cli" className={styles.mobileLink}>CLI</Link>
-          <Link href="/use-cases" className={styles.mobileLink}>Use Cases</Link>
+          <Link href="/guide-plugin" className={styles.mobileLink}>Guide Plugin</Link>
+          <Link href="/agent-sdk" className={styles.mobileLink}>Agent SDK</Link>
           <Link href="/api" className={styles.mobileLink}>API</Link>
         </nav>
       </div>
