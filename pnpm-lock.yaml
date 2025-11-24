@@ -194,6 +194,25 @@ importers:
         specifier: ^4.7.0
         version: 4.20.6
 
+  packages/cli:
+    dependencies:
+      adm-zip:
+        specifier: ^0.5.10
+        version: 0.5.16
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.3.2
+    devDependencies:
+      '@viyv-claude-plugin':
+        specifier: workspace:*
+        version: link:../core
+      tsup:
+        specifier: ^8.0.1
+        version: 8.5.1(typescript@5.9.3)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
   packages/core:
     dependencies:
       adm-zip:

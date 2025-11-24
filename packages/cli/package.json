@@ -1,0 +1,23 @@
+{
+  "name": "@viyv-claude-plugin/cli",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "viyv-claude-plugin": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean",
+    "dev": "tsup src/index.ts --format esm --dts --out-dir dist --watch",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@viyv-claude-plugin": "workspace:*",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}
