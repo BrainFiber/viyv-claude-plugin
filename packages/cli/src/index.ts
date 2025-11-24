@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import { existsSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { readFile } from 'fs/promises';
 import { resolveMarketplacePath, readMarketplaceName, resolveRootFromMarketplace } from './utils.js';
 import { loadState, saveState } from './state.js';
 import { runClaude } from './exec.js';
 import { fetchSource, detectPluginSource } from './source.js';
-import { ClaudePluginManagerImpl } from '@viyv-claude-plugin';
+import { ClaudePluginManagerImpl, getDefaultPluginRoot } from '@viyv-claude-plugin';
 
 function printHelp() {
   console.log(`Usage: viyv-claude-plugin <command> [options]
@@ -16,7 +16,7 @@ Commands:
   uninstall             Remove registered marketplace
   update                Update marketplace from its source
   list                  List installed plugins
-  install <source> [name...]  Install plugin(s) from source (dir/zip/GitHub/git/URL)
+  install <source> [name...]  Install plugin(s) from source (--all for all plugins)
   remove <id>           Remove a locally installed plugin
   update-plugin <id>    Re-install a plugin from its original source
   new <name>            Scaffold a marketplace + plugin in current directory
@@ -46,6 +46,9 @@ function parseArgs(argv: string[]): Parsed {
         break;
       case '--force':
         flags.force = true;
+        break;
+      case '--all':
+        flags.all = true;
         break;
       case '--dry-run':
         flags.dryRun = true;
@@ -109,17 +112,24 @@ async function handleSetup(flags: Record<string, any>) {
     return;
   }
 
-  const args = ['plugin', 'marketplace', 'add', root];
+  const addArgs = ['plugin', 'marketplace', 'add', root];
   if (flags.dryRun) {
-    console.log(`[dry-run] claude ${args.join(' ')}`);
+    console.log(`[dry-run] claude ${addArgs.join(' ')}`);
     if (name) await saveState({ marketplaceName: name, marketplacePath: root });
     return;
   }
 
-  const res = runClaude(args, process.cwd());
-  if (res.status !== 0) {
-    process.exitCode = res.status ?? 1;
-    return;
+  // Try to add silently first - if already installed, it will fail
+  const addRes = runClaude(addArgs, process.cwd(), { silent: true });
+  if (addRes.status !== 0) {
+    // If already installed, try to update instead
+    const updateArgs = ['plugin', 'marketplace', 'update'];
+    if (name) updateArgs.push(name);
+    const updateRes = runClaude(updateArgs, process.cwd());
+    if (updateRes.status !== 0) {
+      process.exitCode = updateRes.status ?? 1;
+      return;
+    }
   }
 
   await saveState({ marketplaceName: name, marketplacePath: root });
@@ -160,28 +170,41 @@ async function handleMarketplaceUpdate(flags: Record<string, any>) {
 
   if (flags.dryRun) {
     console.log(`[dry-run] claude ${args.join(' ')}`);
-    return;
+  } else {
+    const res = runClaude(args, process.cwd());
+    if (res.status !== 0) {
+      process.exitCode = res.status ?? 1;
+      return;
+    }
   }
 
-  const res = runClaude(args, process.cwd());
-  if (res.status !== 0) {
-    process.exitCode = res.status ?? 1;
-    return;
-  }
+  // Re-copy installed plugins from local marketplace
+  setEnvRoot(root);
+  const { updated, failed } = await updateInstalledMarketplacePlugins(root, flags);
 
   if (name) {
     await saveState({ marketplaceName: name, marketplacePath: root });
-    console.log(`Updated marketplace: ${name}`);
-  } else {
-    console.log('Updated all marketplaces');
+  }
+
+  // Report results
+  if (updated.length > 0) {
+    console.log(`Updated marketplace: ${name || 'all'}`);
+    console.log(`Re-copied plugins: ${updated.join(', ')}`);
+  } else if (failed.length === 0) {
+    console.log(`Updated marketplace: ${name || 'all'}`);
+  }
+
+  if (failed.length > 0) {
+    console.error(`Failed to update: ${failed.join(', ')}`);
+    process.exitCode = 1;
   }
 }
 
-async function handleList(flags: Record<string, any>) {
+async function handleList(_flags: Record<string, any>) {
   const state = await loadState();
-  const { root } = resolvePaths(flags.path || state.marketplacePath);
-  setEnvRoot(root);
-  const manager = new ClaudePluginManagerImpl(root);
+  // Use installed plugins directory (~/.viyv-claude/), not marketplace source
+  const installedRoot = getDefaultPluginRoot();
+  const manager = new ClaudePluginManagerImpl(installedRoot);
 
   const plugins = await manager.list();
   if (plugins.length === 0) {
@@ -247,6 +270,15 @@ async function handleInstall(args: string[], flags: Record<string, any>) {
       return;
     }
 
+    // Multiple plugins - if --all flag, install all
+    if (flags.all) {
+      for (const plugin of plugins) {
+        const pluginPath = join(fetch.path, plugin.source);
+        await installSinglePlugin(pluginPath, source, flags, manager, root, plugin.name);
+      }
+      return;
+    }
+
     // Multiple plugins - require name(s) to be specified
     if (pluginNames.length === 0) {
       console.error('Error: Multiple plugins found. Specify plugin name(s):');
@@ -255,7 +287,7 @@ async function handleInstall(args: string[], flags: Record<string, any>) {
         const ver = p.version ? ` (${p.version})` : '';
         console.error(`  - ${p.name}${ver}${desc}`);
       }
-      console.error('\nUsage: install <source> <name> [name...]');
+      console.error('\nUsage: install <source> <name> [name...] or install <source> --all');
       process.exitCode = 1;
       return;
     }
@@ -284,7 +316,7 @@ async function installSinglePlugin(
   pluginPath: string,
   source: string,
   flags: Record<string, any>,
-  manager: ClaudePluginManagerImpl,
+  manager: InstanceType<typeof ClaudePluginManagerImpl>,
   root: string,
   overrideName?: string
 ) {
@@ -413,6 +445,78 @@ function detectSourceTypeLabel(source: string): string {
   return 'dir';
 }
 
+function slugify(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+async function updateInstalledMarketplacePlugins(
+  marketplaceRoot: string,
+  flags: Record<string, any>
+): Promise<{ updated: string[]; failed: string[] }> {
+  // Resolve to absolute path
+  const absoluteMarketplaceRoot = resolve(marketplaceRoot);
+
+  // Use the default plugin root (~/.viyv-claude/) for installed plugins
+  const installedRoot = getDefaultPluginRoot();
+  const manager = new ClaudePluginManagerImpl(installedRoot);
+  const state = await loadState();
+
+  // 1. Detect marketplace plugins from the source
+  const detection = await detectPluginSource(absoluteMarketplaceRoot);
+  if (detection.type !== 'marketplace') {
+    return { updated: [], failed: [] }; // Not a marketplace, nothing to update
+  }
+
+  // 2. Get installed plugins
+  const installedPlugins = await manager.list();
+  const installedIds = new Set(installedPlugins.map(p => p.id));
+
+  // 3. Find installed plugins from this marketplace
+  const toUpdate = detection.plugins.filter(mp => installedIds.has(slugify(mp.name)));
+
+  const updated: string[] = [];
+  const failed: string[] = [];
+
+  for (const plugin of toUpdate) {
+    const id = slugify(plugin.name);
+    const pluginPath = resolve(absoluteMarketplaceRoot, plugin.source);
+
+    if (flags.dryRun) {
+      console.log(`[dry-run] would re-copy plugin "${id}" from ${pluginPath}`);
+      updated.push(id);
+      continue;
+    }
+
+    try {
+      // Delete existing
+      await manager.delete(id);
+
+      // Re-import from marketplace source
+      await manager.importFromPath({ path: pluginPath, name: plugin.name });
+
+      // Update install record with timestamp
+      const installs = state.installs || {};
+      if (installs[id]) {
+        installs[id].lastInstalledAt = new Date().toISOString();
+      } else {
+        installs[id] = {
+          source: marketplaceRoot,
+          type: 'local',
+          lastInstalledAt: new Date().toISOString(),
+        };
+      }
+      await saveState({ ...state, installs });
+
+      updated.push(id);
+    } catch (err) {
+      console.error(`Failed to update plugin "${id}": ${(err as Error).message}`);
+      failed.push(id);
+    }
+  }
+
+  return { updated, failed };
+}
+
 async function main() {
   const { command, args, flags } = parseArgs(process.argv.slice(2));
   if (!command || flags.help || command === 'help') {
@@ -429,6 +533,8 @@ async function main() {
         await handleUninstall(flags);
         break;
       case 'update':
+        // Accept path as first argument: update . or update /path/to/marketplace
+        if (args[0]) flags.path = args[0];
         await handleMarketplaceUpdate(flags);
         break;
       case 'list':

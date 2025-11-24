@@ -4,10 +4,14 @@ export type ExecResult = {
   status: number | null;
 };
 
-export function runClaude(args: string[], cwd: string): ExecResult {
+export type RunClaudeOptions = {
+  silent?: boolean;
+};
+
+export function runClaude(args: string[], cwd: string, options?: RunClaudeOptions): ExecResult {
   const res = spawnSync('claude', args, {
     cwd,
-    stdio: 'inherit',
+    stdio: options?.silent ? 'pipe' : 'inherit',
     shell: false,
   });
   return { status: res.status };

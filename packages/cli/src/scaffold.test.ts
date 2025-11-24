@@ -34,6 +34,8 @@ describe('scaffoldNewPlugin', () => {
     const mp = JSON.parse(await readFile(join(cwd, '.claude-plugin', 'marketplace.json'), 'utf-8'));
     expect(mp.name).toBe('my-mp');
     expect(mp.plugins[0].name).toBe('hello-world');
+    // source should be relative path starting with ./
+    expect(mp.plugins[0].source).toBe('./plugins/hello-world');
 
     const pj = JSON.parse(
       await readFile(join(cwd, 'plugins', 'hello-world', '.claude-plugin', 'plugin.json'), 'utf-8')

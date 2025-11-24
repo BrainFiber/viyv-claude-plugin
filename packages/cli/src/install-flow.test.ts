@@ -299,3 +299,221 @@ describe('marketplace install flow', () => {
     expect(installed[0].version).toBe('2.0.0');
   });
 });
+
+// Helper function to slugify names (same as in index.ts)
+function slugify(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+// Helper to simulate updateInstalledMarketplacePlugins logic
+async function updateInstalledMarketplacePlugins(
+  marketplaceRoot: string,
+  installedRoot: string
+): Promise<{ updated: string[]; failed: string[] }> {
+  const manager = new ClaudePluginManagerImpl(installedRoot);
+
+  const detection = await detectPluginSource(marketplaceRoot);
+  if (detection.type !== 'marketplace') {
+    return { updated: [], failed: [] };
+  }
+
+  const installedPlugins = await manager.list();
+  const installedIds = new Set(installedPlugins.map(p => p.id));
+
+  const toUpdate = detection.plugins.filter(mp => installedIds.has(slugify(mp.name)));
+
+  const updated: string[] = [];
+  const failed: string[] = [];
+
+  for (const plugin of toUpdate) {
+    const id = slugify(plugin.name);
+    const pluginPath = join(marketplaceRoot, plugin.source);
+
+    try {
+      await manager.delete(id);
+      await manager.importFromPath({ path: pluginPath, name: plugin.name });
+      updated.push(id);
+    } catch (err) {
+      failed.push(id);
+    }
+  }
+
+  return { updated, failed };
+}
+
+describe('marketplace update flow (update command)', () => {
+  let installedRoot: string;
+  let sourceDir: string;
+
+  beforeEach(async () => {
+    installedRoot = await mkdtemp('/tmp/viyv-update-installed-');
+    sourceDir = await mkdtemp('/tmp/viyv-update-source-');
+    process.env.CLAUDE_PLUGIN_ROOT = installedRoot;
+    process.env.CLAUDE_HOME = installedRoot;
+    await saveState({ marketplacePath: installedRoot });
+  });
+
+  afterEach(async () => {
+    delete process.env.CLAUDE_PLUGIN_ROOT;
+    delete process.env.CLAUDE_HOME;
+    await rm(installedRoot, { recursive: true, force: true });
+    await rm(sourceDir, { recursive: true, force: true });
+  });
+
+  it('updates installed plugins from local marketplace', async () => {
+    // Create marketplace with initial version
+    const mpDir = await createMarketplaceDir(sourceDir, [
+      { name: 'update-test-plugin', version: '1.0.0' },
+    ]);
+    const manager = new ClaudePluginManagerImpl(installedRoot);
+
+    // Install initial version
+    const detection = await detectPluginSource(mpDir);
+    expect(detection.type).toBe('marketplace');
+    if (detection.type === 'marketplace') {
+      const plugin = detection.plugins[0];
+      const pluginPath = join(mpDir, plugin.source);
+      await manager.importFromPath({ path: pluginPath, name: plugin.name });
+    }
+
+    let installed = await manager.list();
+    expect(installed).toHaveLength(1);
+    expect(installed[0].version).toBe('1.0.0');
+
+    // Update marketplace source to v2.0.0
+    const pluginJsonPath = join(mpDir, 'plugins', 'update-test-plugin', '.claude-plugin', 'plugin.json');
+    await fsWriteFile(pluginJsonPath, JSON.stringify({
+      name: 'update-test-plugin',
+      version: '2.0.0',
+      description: 'Updated plugin',
+    }, null, 2));
+
+    // Run update
+    const result = await updateInstalledMarketplacePlugins(mpDir, installedRoot);
+    expect(result.updated).toContain('update-test-plugin');
+    expect(result.failed).toHaveLength(0);
+
+    // Verify version updated
+    installed = await manager.list();
+    expect(installed).toHaveLength(1);
+    expect(installed[0].version).toBe('2.0.0');
+  });
+
+  it('only updates plugins that are installed', async () => {
+    // Create marketplace with multiple plugins
+    const mpDir = await createMarketplaceDir(sourceDir, [
+      { name: 'installed-plugin', version: '1.0.0' },
+      { name: 'not-installed-plugin', version: '1.0.0' },
+    ]);
+    const manager = new ClaudePluginManagerImpl(installedRoot);
+
+    // Only install one plugin
+    const detection = await detectPluginSource(mpDir);
+    expect(detection.type).toBe('marketplace');
+    if (detection.type === 'marketplace') {
+      const plugin = detection.plugins.find(p => p.name === 'installed-plugin');
+      const pluginPath = join(mpDir, plugin!.source);
+      await manager.importFromPath({ path: pluginPath, name: plugin!.name });
+    }
+
+    // Update version in source
+    const pluginJsonPath = join(mpDir, 'plugins', 'installed-plugin', '.claude-plugin', 'plugin.json');
+    await fsWriteFile(pluginJsonPath, JSON.stringify({
+      name: 'installed-plugin',
+      version: '2.0.0',
+      description: 'Updated',
+    }, null, 2));
+
+    // Run update
+    const result = await updateInstalledMarketplacePlugins(mpDir, installedRoot);
+
+    // Should only update the installed plugin
+    expect(result.updated).toHaveLength(1);
+    expect(result.updated).toContain('installed-plugin');
+
+    // Verify only 1 plugin installed (not-installed-plugin was not installed)
+    const installed = await manager.list();
+    expect(installed).toHaveLength(1);
+    expect(installed[0].id).toBe('installed-plugin');
+  });
+
+  it('returns empty when no plugins match', async () => {
+    // Create marketplace with plugins
+    const mpDir = await createMarketplaceDir(sourceDir, [
+      { name: 'marketplace-plugin', version: '1.0.0' },
+    ]);
+    const manager = new ClaudePluginManagerImpl(installedRoot);
+
+    // Install a different plugin (not in marketplace)
+    const differentPluginDir = await createPluginDir(sourceDir, 'different-plugin', '1.0.0');
+    await manager.importFromPath({ path: differentPluginDir, name: 'different-plugin' });
+
+    // Run update
+    const result = await updateInstalledMarketplacePlugins(mpDir, installedRoot);
+
+    // No plugins should be updated
+    expect(result.updated).toHaveLength(0);
+    expect(result.failed).toHaveLength(0);
+  });
+
+  it('returns empty for non-marketplace source', async () => {
+    // Create a single plugin (not a marketplace)
+    const pluginDir = await createPluginDir(sourceDir, 'single-plugin', '1.0.0');
+
+    // Run update with plugin directory (not marketplace)
+    const result = await updateInstalledMarketplacePlugins(pluginDir, installedRoot);
+
+    // Should return empty since it's not a marketplace
+    expect(result.updated).toHaveLength(0);
+    expect(result.failed).toHaveLength(0);
+  });
+
+  it('updates multiple installed plugins from marketplace', async () => {
+    // Create marketplace with multiple plugins
+    const mpDir = await createMarketplaceDir(sourceDir, [
+      { name: 'plugin-a', version: '1.0.0' },
+      { name: 'plugin-b', version: '1.0.0' },
+      { name: 'plugin-c', version: '1.0.0' },
+    ]);
+    const manager = new ClaudePluginManagerImpl(installedRoot);
+
+    // Install two plugins
+    const detection = await detectPluginSource(mpDir);
+    expect(detection.type).toBe('marketplace');
+    if (detection.type === 'marketplace') {
+      for (const name of ['plugin-a', 'plugin-c']) {
+        const plugin = detection.plugins.find(p => p.name === name);
+        const pluginPath = join(mpDir, plugin!.source);
+        await manager.importFromPath({ path: pluginPath, name: plugin!.name });
+      }
+    }
+
+    // Update versions in source
+    for (const name of ['plugin-a', 'plugin-b', 'plugin-c']) {
+      const pluginJsonPath = join(mpDir, 'plugins', name, '.claude-plugin', 'plugin.json');
+      await fsWriteFile(pluginJsonPath, JSON.stringify({
+        name,
+        version: '2.0.0',
+        description: 'Updated',
+      }, null, 2));
+    }
+
+    // Run update
+    const result = await updateInstalledMarketplacePlugins(mpDir, installedRoot);
+
+    // Should only update the two installed plugins
+    expect(result.updated).toHaveLength(2);
+    expect(result.updated).toContain('plugin-a');
+    expect(result.updated).toContain('plugin-c');
+
+    // plugin-b should not be in updated list
+    expect(result.updated).not.toContain('plugin-b');
+
+    // Verify versions
+    const installed = await manager.list();
+    expect(installed).toHaveLength(2);
+    for (const p of installed) {
+      expect(p.version).toBe('2.0.0');
+    }
+  });
+});

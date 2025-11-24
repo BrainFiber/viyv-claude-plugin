@@ -5,10 +5,5 @@
   "author": {
     "name": "{{PLUGIN_AUTHOR_NAME}}",
     "email": "{{PLUGIN_AUTHOR_EMAIL}}"
-  },
-  "commands": "./commands",
-  "agents": "./agents",
-  "skills": "./skills",
-  "hooks": "./hooks/hooks.json",
-  "mcpServers": "./.mcp.json"
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "name": "viyv-claude-plugin-guide",
+  "description": "viyv-claude-pluginの使い方ガイドスキル集",
+  "version": "1.0.0",
+  "author": {
+    "name": "Local Dev",
+    "email": ""
+  },
+  "skills": "./skills"
+}
