@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${sora.variable} ${firaCode.variable}`}>
         <Header />
-        <main style={{ minHeight: 'calc(100vh - var(--header-height))', paddingTop: 'var(--header-height)' }}>
+        <main style={{ paddingTop: 'var(--header-height)' }}>
           {children}
         </main>
         <Footer />

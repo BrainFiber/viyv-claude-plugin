@@ -1,0 +1,96 @@
+.terminal {
+  background: var(--terminal-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  font-family: var(--font-fira-code), monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.header {
+  background: var(--terminal-header);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.buttonRed,
+.buttonYellow,
+.buttonGreen {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.buttonRed {
+  background: #ff5f57;
+}
+
+.buttonYellow {
+  background: #ffbd2e;
+}
+
+.buttonGreen {
+  background: #28c840;
+}
+
+.title {
+  color: var(--terminal-comment);
+  font-size: 0.8rem;
+  flex: 1;
+  text-align: center;
+}
+
+.spacer {
+  width: 52px;
+}
+
+.body {
+  padding: 1.25rem 1.5rem;
+  min-height: 200px;
+}
+
+.line {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 1.6em;
+}
+
+.prompt {
+  color: var(--terminal-prompt);
+  user-select: none;
+}
+
+.command {
+  color: var(--terminal-command);
+}
+
+.output {
+  color: var(--terminal-text);
+  opacity: 0.85;
+}
+
+.comment {
+  color: var(--terminal-comment);
+  font-style: italic;
+}
+
+/* Animation for typing effect */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing .command {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 1s steps(30) forwards;
+}
