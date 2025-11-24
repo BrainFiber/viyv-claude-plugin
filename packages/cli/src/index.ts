@@ -6,7 +6,7 @@ import { resolveMarketplacePath, readMarketplaceName, resolveRootFromMarketplace
 import { loadState, saveState } from './state.js';
 import { runClaude } from './exec.js';
 import { fetchSource, detectPluginSource } from './source.js';
-import { ClaudePluginManagerImpl, getDefaultPluginRoot } from '@viyv-claude-plugin';
+import { ClaudePluginManagerImpl, getDefaultPluginRoot } from 'viyv-claude-plugin-core';
 
 function printHelp() {
   console.log(`Usage: viyv-claude-plugin <command> [options]

@@ -9,7 +9,7 @@
     "subagents": "tsx --no-wait-for-watchman --no-node-warnings --no-swcrc agent-subagents.ts"
   },
   "dependencies": {
-    "@viyv-claude-plugin": "workspace:*"
+    "viyv-claude-plugin-core": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.7.0"

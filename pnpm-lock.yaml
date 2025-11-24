@@ -70,7 +70,7 @@ importers:
 
   examples/agent-sdk-local:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -80,7 +80,7 @@ importers:
 
   examples/agents-only:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -90,7 +90,7 @@ importers:
 
   examples/basic-usage:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -100,7 +100,7 @@ importers:
 
   examples/commands-only:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -110,7 +110,7 @@ importers:
 
   examples/data-processor:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -123,7 +123,7 @@ importers:
       '@anthropic-ai/claude-agent-sdk':
         specifier: ^0.1.50
         version: 0.1.50(zod@3.25.76)
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -133,7 +133,7 @@ importers:
 
   examples/forms-automation:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -143,12 +143,12 @@ importers:
 
   examples/full-coverage:
     dependencies:
-      '@viyv-claude-plugin':
-        specifier: workspace:*
-        version: link:../../packages/core
       adm-zip:
         specifier: ^0.5.16
         version: 0.5.16
+      viyv-claude-plugin-core:
+        specifier: workspace:*
+        version: link:../../packages/core
     devDependencies:
       tsx:
         specifier: ^4.7.0
@@ -156,7 +156,7 @@ importers:
 
   examples/knowledge-base:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -166,7 +166,7 @@ importers:
 
   examples/multi-plugins:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -176,7 +176,7 @@ importers:
 
   examples/skills-only:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -186,7 +186,7 @@ importers:
 
   examples/subagents:
     dependencies:
-      '@viyv-claude-plugin':
+      viyv-claude-plugin-core:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -203,15 +203,15 @@ importers:
         specifier: ^11.2.0
         version: 11.3.2
     devDependencies:
-      '@viyv-claude-plugin':
-        specifier: workspace:*
-        version: link:../core
       tsup:
         specifier: ^8.0.1
         version: 8.5.1(typescript@5.9.3)
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
+      viyv-claude-plugin-core:
+        specifier: workspace:*
+        version: link:../core
 
   packages/core:
     dependencies:

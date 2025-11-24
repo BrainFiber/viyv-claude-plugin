@@ -1,5 +1,5 @@
 {
-  "name": "@viyv-claude-plugin",
+  "name": "viyv-claude-plugin-core",
   "version": "1.0.0",
   "description": "Core library for Claude plugin management",
   "type": "module",
@@ -24,10 +24,27 @@
   "keywords": [
     "claude",
     "plugin",
-    "manager"
+    "manager",
+    "anthropic",
+    "claude-code"
   ],
-  "author": "",
+  "author": "brainfiber inc. <hiroki.takezawa@brainfiber.net>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainfiber/viyv-claude-plugin.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/brainfiber/viyv-claude-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/brainfiber/viyv-claude-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "adm-zip": "^0.5.10",
     "fs-extra": "^11.2.0"

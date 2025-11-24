@@ -13,7 +13,7 @@
 import { mkdtemp, rm } from 'fs/promises';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { createPluginManager, createAgentSdkPluginAdapter } from '@viyv-claude-plugin';
+import { createPluginManager, createAgentSdkPluginAdapter } from 'viyv-claude-plugin-core';
 import { query, type AgentDefinition } from '@anthropic-ai/claude-agent-sdk';
 
 async function main() {

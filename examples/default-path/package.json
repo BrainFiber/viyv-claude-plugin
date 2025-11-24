@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.1.50",
-    "@viyv-claude-plugin": "workspace:*"
+    "viyv-claude-plugin-core": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.7.0"

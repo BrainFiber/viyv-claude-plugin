@@ -5,7 +5,7 @@ import AdmZip from 'adm-zip';
 import {
   createPluginManager,
   createAgentSdkPluginAdapter,
-} from '@viyv-claude-plugin';
+} from 'viyv-claude-plugin-core';
 
 async function makeTempRoot(label: string) {
   return mkdtemp(join(tmpdir(), `viyv-demo-${label}-`));

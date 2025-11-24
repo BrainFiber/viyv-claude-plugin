@@ -14,8 +14,8 @@ Claude Code 用プラグインをローカルで管理するための Node.js �
 
 | パッケージ | 説明 |
 |-----------|------|
-| `@viyv-claude-plugin` | コアライブラリ（プラグイン管理API） |
-| `@viyv-claude-plugin/cli` | CLI ツール（プラグイン作成・インストール・管理） |
+| `viyv-claude-plugin-core` | コアライブラリ（プラグイン管理API） |
+| `viyv-claude-plugin` | CLI ツール（プラグイン作成・インストール・管理） |
 
 ## 🚀 クイックスタート
 
@@ -23,26 +23,26 @@ Claude Code 用プラグインをローカルで管理するための Node.js �
 
 ```bash
 # 新規プラグインプロジェクトを作成
-npx @viyv-claude-plugin/cli new my-plugin
+npx viyv-claude-plugin new my-plugin
 
 # Claude Code にマーケットプレイスを登録
-npx @viyv-claude-plugin/cli setup
+npx viyv-claude-plugin setup
 
 # プラグインを編集後、更新を反映
-npx @viyv-claude-plugin/cli update
+npx viyv-claude-plugin update
 ```
 
 ### 既存プラグインをインストール
 
 ```bash
 # GitHub からインストール
-npx @viyv-claude-plugin/cli install github:user/repo
+npx viyv-claude-plugin install github:user/repo
 
 # ローカルディレクトリからインストール
-npx @viyv-claude-plugin/cli install ./path/to/plugin
+npx viyv-claude-plugin install ./path/to/plugin
 
 # マーケットプレイスから全プラグインをインストール
-npx @viyv-claude-plugin/cli install ./marketplace --all
+npx viyv-claude-plugin install ./marketplace --all
 ```
 
 ---
@@ -52,7 +52,7 @@ npx @viyv-claude-plugin/cli install ./marketplace --all
 ### プロジェクト作成
 
 ```bash
-npx @viyv-claude-plugin/cli new <name> [options]
+npx viyv-claude-plugin new <name> [options]
 ```
 
 新規プラグインプロジェクト（マーケットプレイス + プラグイン）を作成します。
@@ -87,29 +87,29 @@ npx @viyv-claude-plugin/cli new <name> [options]
 
 ```bash
 # Claude Code にマーケットプレイスを登録
-npx @viyv-claude-plugin/cli setup [-p <path>] [-n <name>]
+npx viyv-claude-plugin setup [-p <path>] [-n <name>]
 
 # 登録済みマーケットプレイスを削除
-npx @viyv-claude-plugin/cli uninstall [-n <name>]
+npx viyv-claude-plugin uninstall [-n <name>]
 
 # マーケットプレイスを更新（変更を反映）
-npx @viyv-claude-plugin/cli update [path]
+npx viyv-claude-plugin update [path]
 ```
 
 ### プラグイン管理
 
 ```bash
 # インストール済みプラグイン一覧
-npx @viyv-claude-plugin/cli list
+npx viyv-claude-plugin list
 
 # プラグインをインストール
-npx @viyv-claude-plugin/cli install <source> [name...] [options]
+npx viyv-claude-plugin install <source> [name...] [options]
 
 # プラグインを削除
-npx @viyv-claude-plugin/cli remove <id>
+npx viyv-claude-plugin remove <id>
 
 # プラグインを更新
-npx @viyv-claude-plugin/cli update-plugin <id>
+npx viyv-claude-plugin update-plugin <id>
 ```
 
 **install コマンドのソースタイプ:**
@@ -138,15 +138,15 @@ npx @viyv-claude-plugin/cli update-plugin <id>
 ### インストール
 
 ```bash
-npm install @viyv-claude-plugin
+npm install viyv-claude-plugin-core
 # または
-pnpm add @viyv-claude-plugin
+pnpm add viyv-claude-plugin-core
 ```
 
 ### 基本の使い方
 
 ```ts
-import { createPluginManager } from '@viyv-claude-plugin';
+import { createPluginManager } from 'viyv-claude-plugin-core';
 
 const manager = await createPluginManager();
 
@@ -190,7 +190,7 @@ await manager.importFromUrl({
 ### Claude Agent SDK との連携
 
 ```ts
-import { createAgentSdkPluginAdapter, createPluginManager } from '@viyv-claude-plugin';
+import { createAgentSdkPluginAdapter, createPluginManager } from 'viyv-claude-plugin-core';
 import { query } from '@anthropic-ai/claude-agent-sdk';
 
 const manager = await createPluginManager();
@@ -282,7 +282,7 @@ description: Provides file placement rules and structure for skill files. Auto-i
 pnpm test
 
 # カバレッジ付き
-pnpm --filter @viyv-claude-plugin test -- --coverage
+pnpm --filter viyv-claude-plugin-core test -- --coverage
 ```
 
 ---
@@ -303,8 +303,8 @@ pnpm --filter @viyv-claude-plugin test -- --coverage
 ```
 viyv-claude-plugin/
 ├── packages/
-│   ├── core/            # @viyv-claude-plugin（コアライブラリ）
-│   └── cli/             # @viyv-claude-plugin/cli（CLI ツール）
+│   ├── core/            # viyv-claude-plugin-core（コアライブラリ）
+│   └── cli/             # viyv-claude-plugin（CLI ツール）
 ├── plugins/
 │   └── viyv-claude-plugin-guide/  # プラグイン開発ガイド
 ├── examples/            # サンプルコード

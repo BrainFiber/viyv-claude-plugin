@@ -1,22 +1,53 @@
 {
-  "name": "@viyv-claude-plugin/cli",
-  "version": "0.0.1",
-  "private": true,
+  "name": "viyv-claude-plugin",
+  "version": "1.0.0",
+  "description": "CLI tool for creating and managing Claude Code plugins",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
     "viyv-claude-plugin": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "templates"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean",
     "dev": "tsup src/index.ts --format esm --dts --out-dir dist --watch",
     "test": "vitest"
+  },
+  "keywords": [
+    "claude",
+    "plugin",
+    "cli",
+    "anthropic",
+    "claude-code",
+    "ai"
+  ],
+  "author": "brainfiber inc. <hiroki.takezawa@brainfiber.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainfiber/viyv-claude-plugin.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/brainfiber/viyv-claude-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/brainfiber/viyv-claude-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "adm-zip": "^0.5.10",
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
-    "@viyv-claude-plugin": "workspace:*",
+    "viyv-claude-plugin-core": "workspace:*",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }

@@ -8,7 +8,7 @@
     "sdk": "tsx agent-sdk.ts"
   },
   "dependencies": {
-    "@viyv-claude-plugin": "workspace:*"
+    "viyv-claude-plugin-core": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.7.0"

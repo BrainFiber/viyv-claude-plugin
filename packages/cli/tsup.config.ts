@@ -8,6 +8,6 @@ export default defineConfig({
   format: ['esm'],
   target: 'node18',
   clean: true,
-  noExternal: ['@viyv-claude-plugin'],
+  noExternal: ['viyv-claude-plugin-core'],
   external: ['fs-extra', 'adm-zip'],
 });
