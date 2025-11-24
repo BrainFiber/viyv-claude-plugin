@@ -106,6 +106,27 @@
   font-family: var(--font-fira-code);
 }
 
+.installCommand {
+  background: var(--terminal-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-fira-code);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+.installCommand code {
+  color: var(--terminal-command);
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
 .actions {
   display: flex;
   gap: 1.25rem;

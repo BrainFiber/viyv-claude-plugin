@@ -3,7 +3,7 @@
 import styles from './Terminal.module.css';
 
 type TerminalLine = {
-  type: 'command' | 'output' | 'comment';
+  type: 'command' | 'output' | 'comment' | 'success';
   text: string;
   prompt?: string;
 };
@@ -40,6 +40,9 @@ export default function Terminal({ lines, title = 'Terminal', className = '' }: 
             )}
             {line.type === 'comment' && (
               <span className={styles.comment}># {line.text}</span>
+            )}
+            {line.type === 'success' && (
+              <span className={styles.success}>{line.text}</span>
             )}
           </div>
         ))}

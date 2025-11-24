@@ -16,7 +16,7 @@ const commands = [
   {
     name: 'setup',
     usage: 'npx viyv-claude-plugin setup',
-    description: 'ローカルマーケットプレイスをClaude Codeに登録します。',
+    description: '初回のみ実行。ローカルマーケットプレイス（~/.viyv-claude）をClaude Codeに登録します。',
     options: [
       { flag: '-p, --path <path>', desc: 'マーケットプレイスのパス' },
       { flag: '-n, --name <name>', desc: 'マーケットプレイス名' },
@@ -161,14 +161,17 @@ export default function CLIPage() {
           <h2 className={styles.sectionTitle}>使用例</h2>
           <div className={styles.examples}>
             <div className={styles.example}>
-              <h4>新規プロジェクト作成からセットアップまで</h4>
+              <h4>初回セットアップからプラグイン作成まで</h4>
               <Terminal
                 title="Quick Start"
                 lines={[
-                  { type: 'command', text: 'npx viyv-claude-plugin new my-plugin' },
-                  { type: 'command', text: 'cd my-plugin' },
-                  { type: 'comment', text: 'プラグインを編集...' },
+                  { type: 'comment', text: '初回のみ: マーケットプレイスをセットアップ' },
                   { type: 'command', text: 'npx viyv-claude-plugin setup' },
+                  { type: 'output', text: '' },
+                  { type: 'comment', text: 'プラグイン作成' },
+                  { type: 'command', text: 'npx viyv-claude-plugin new my-plugin' },
+                  { type: 'comment', text: 'スキルを編集後、インストール' },
+                  { type: 'command', text: 'npx viyv-claude-plugin install .' },
                 ]}
               />
             </div>

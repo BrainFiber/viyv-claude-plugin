@@ -6,6 +6,13 @@ import styles from './Features.module.css';
 
 const useCases = [
   {
+    icon: '🚀',
+    title: '1コマンドでスキル作成',
+    description: 'new コマンドでスキルのひな形を即生成。Markdown形式で簡単に定義し、すぐにClaude Codeで利用開始。',
+    tags: ['簡単', 'CLI'],
+    link: '/getting-started',
+  },
+  {
     icon: '⚡',
     title: 'Guide Plugin で爆速開発',
     description: 'GitHub からインストールするだけで、Claude Code 内でスキル開発のベストプラクティスを即座に参照。開発が爆速に。',
@@ -13,25 +20,18 @@ const useCases = [
     link: '/guide-plugin',
   },
   {
-    icon: '🔌',
-    title: 'Agent SDK 連携',
-    description: 'Core パッケージでファイルシステム管理を自動化。プログラマティックにプラグインを作成し、Agent SDK と簡単統合。',
-    tags: ['Core', 'SDK'],
-    link: '/agent-sdk',
+    icon: '📁',
+    title: 'プロジェクト組み込み',
+    description: '既存プロジェクト内でスキルを開発。コード参照やテストも容易。プロジェクト固有のワークフローをClaude Codeで強化。',
+    tags: ['プロジェクト', 'テスト'],
+    link: '/getting-started',
   },
   {
     icon: '👥',
-    title: 'チームでスキル共有',
-    description: 'プラグインはリポジトリ内に配置。git pull後に install . するだけで、チーム全員が同じスキルを即適用。',
+    title: 'チームで簡単共有',
+    description: 'git pull 後に install . するだけで、チーム全員が同じスキルを即適用。スキルの更新も即反映。',
     tags: ['git', 'チーム'],
     link: '/use-cases#team-sharing',
-  },
-  {
-    icon: '🔍',
-    title: 'コードレビュー支援',
-    description: 'エージェントでコード品質チェックを自動化。セキュリティ・パフォーマンス・保守性を一括レビュー。',
-    tags: ['Agent', '品質管理'],
-    link: '/use-cases#code-review',
   },
 ];
 
@@ -61,12 +61,12 @@ export default function Features() {
     <section className={styles.features} id="features" ref={sectionRef}>
       <div className="container">
         <div className={styles.header}>
-          <span className={styles.label}>Use Cases</span>
-          <h2 className={styles.title}>チームで活用する</h2>
+          <span className={styles.label}>Features</span>
+          <h2 className={styles.title}>こんな使い方ができます</h2>
           <p className={styles.subtitle}>
-            リポジトリ内にプラグインを配置して、チーム全員で同じスキルを共有。
+            スキルを簡単に作成して、すぐに利用開始。
             <br />
-            プロジェクト固有のワークフローを Claude Code で強化します。
+            プロジェクト組み込みやチーム共有も、CLIだけで完結します。
           </p>
         </div>
 

@@ -83,6 +83,11 @@
   font-style: italic;
 }
 
+.success {
+  color: var(--success);
+  font-weight: 600;
+}
+
 /* Animation for typing effect */
 @keyframes typing {
   from { width: 0; }

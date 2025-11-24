@@ -38,17 +38,18 @@ export default function Hero() {
               Claude Code Plugin Development Kit
             </div>
             <h1 className={styles.title}>
-              チーム全員で同じ
+              Claude Codeスキルを
               <br />
-              <span className={styles.gradientText}>Claude Codeスキルを</span>
+              <span className={styles.gradientText}>簡単に作成・即利用</span>
             </h1>
             <p className={styles.description}>
-              既存プロジェクトに <code>.claude-plugin/</code> と <code>plugins/</code> を作成。
+              1コマンドでスキル作成、すぐに利用開始。
               <br />
-              チームメンバーは git pull 後に <code>install .</code> で即適用。
-              <br />
-              プラグイン開発からチーム展開まで CLI だけで完結。
+              単独でもプロジェクト内でも開発可能。チーム共有も簡単。
             </p>
+            <div className={styles.installCommand}>
+              <code>npx viyv-claude-plugin new my-plugin</code>
+            </div>
             <div className={styles.actions}>
               <Link href="/getting-started" className={`${styles.button} ${styles.primary}`}>
                 5分で始める
@@ -56,8 +57,8 @@ export default function Hero() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
-              <Link href="/use-cases" className={`${styles.button} ${styles.secondary}`}>
-                ユースケースを見る
+              <Link href="/guide-plugin" className={`${styles.button} ${styles.secondary}`}>
+                Guide Plugin
               </Link>
             </div>
             <div className={styles.features}>
@@ -66,14 +67,14 @@ export default function Hero() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
-                <span>リポジトリ内に配置</span>
+                <span>1コマンドで作成</span>
               </div>
               <div className={styles.feature}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
-                <span>git pull で共有</span>
+                <span>単独/プロジェクト内対応</span>
               </div>
               <div className={styles.feature}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -86,23 +87,21 @@ export default function Hero() {
           </div>
           <div className={styles.visual}>
             <Terminal
-              title="既存プロジェクトでセットアップ"
+              title="スキルを作成してすぐに利用"
               lines={[
-                { type: 'comment', text: '既存プロジェクトのルートで実行' },
-                { type: 'command', text: 'npx viyv-claude-plugin new my-plugin' },
-                { type: 'output', text: '' },
-                { type: 'output', text: 'Created new plugin scaffold at ./' },
-                { type: 'output', text: '  .claude-plugin/marketplace.json' },
-                { type: 'output', text: '  plugins/my-plugin/.claude-plugin/plugin.json' },
-                { type: 'output', text: '  plugins/my-plugin/skills/sample/SKILL.md' },
-                { type: 'output', text: '' },
-                { type: 'comment', text: 'Claude Code に登録' },
+                { type: 'comment', text: '初回: マーケットプレイスをセットアップ' },
                 { type: 'command', text: 'npx viyv-claude-plugin setup' },
-                { type: 'output', text: 'Registered marketplace: my-plugin' },
+                { type: 'output', text: 'Registered marketplace' },
                 { type: 'output', text: '' },
-                { type: 'comment', text: 'チームメンバーは pull 後にこれだけ' },
+                { type: 'comment', text: 'プラグイン作成' },
+                { type: 'command', text: 'npx viyv-claude-plugin new my-plugin' },
+                { type: 'output', text: 'Created: plugins/my-plugin/' },
+                { type: 'output', text: '' },
+                { type: 'comment', text: 'スキルを編集して install' },
                 { type: 'command', text: 'npx viyv-claude-plugin install .' },
                 { type: 'output', text: 'Installed: my-plugin' },
+                { type: 'output', text: '' },
+                { type: 'success', text: 'Claude Code でアクティベートして利用開始!' },
               ]}
             />
           </div>

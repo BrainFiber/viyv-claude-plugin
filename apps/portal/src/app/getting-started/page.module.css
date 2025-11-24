@@ -38,6 +38,61 @@
   line-height: 1.7;
 }
 
+.installSection {
+  background: var(--card-bg);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.installTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
+.installCommand {
+  background: var(--terminal-bg);
+  border-radius: var(--radius);
+  padding: 1rem 1.5rem;
+  font-family: var(--font-fira-code);
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.installCommand code {
+  color: var(--terminal-command);
+}
+
+.installNote {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.optionGrid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .optionGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.option h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  margin-bottom: 0.75rem;
+}
+
 .section {
   margin-bottom: 4rem;
 }
@@ -61,6 +116,28 @@
   font-size: 0.875rem;
   font-weight: 700;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stepSetup {
+  background: var(--primary);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: var(--primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.25rem;
+}
+
+.miniTerminal {
+  margin-top: 1rem;
+  font-size: 0.85rem;
 }
 
 .heading {
