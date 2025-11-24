@@ -1,0 +1,19 @@
+{
+  "name": "{{MARKETPLACE_NAME}}",
+  "owner": {
+    "name": "{{OWNER_NAME}}",
+    "email": "{{OWNER_EMAIL}}"
+  },
+  "plugins": [
+    {
+      "name": "{{PLUGIN_ID}}",
+      "source": "./plugins/{{PLUGIN_ID}}",
+      "description": "{{PLUGIN_DESCRIPTION}}",
+      "version": "{{PLUGIN_VERSION}}",
+      "author": {
+        "name": "{{PLUGIN_AUTHOR_NAME}}",
+        "email": "{{PLUGIN_AUTHOR_EMAIL}}"
+      }
+    }
+  ]
+}

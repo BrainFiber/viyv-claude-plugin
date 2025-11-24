@@ -19,6 +19,7 @@ Commands:
   install <source> [name...]  Install plugin(s) from source (dir/zip/GitHub/git/URL)
   remove <id>           Remove a locally installed plugin
   update-plugin <id>    Re-install a plugin from its original source
+  new <name>            Scaffold a marketplace + plugin in current directory
   help                  Show this help
 `);
 }
@@ -52,6 +53,31 @@ function parseArgs(argv: string[]): Parsed {
       case '-h':
       case '--help':
         flags.help = true;
+        break;
+      // new command flags
+      case '--dir':
+        flags.dir = rest[++i];
+        break;
+      case '--description':
+        flags.description = rest[++i];
+        break;
+      case '--version':
+        flags.version = rest[++i];
+        break;
+      case '--author-name':
+        flags['author-name'] = rest[++i];
+        break;
+      case '--author-email':
+        flags['author-email'] = rest[++i];
+        break;
+      case '--marketplace-name':
+        flags['marketplace-name'] = rest[++i];
+        break;
+      case '--owner-name':
+        flags['owner-name'] = rest[++i];
+        break;
+      case '--owner-email':
+        flags['owner-email'] = rest[++i];
         break;
       default:
         args.push(token);
@@ -417,6 +443,9 @@ async function main() {
       case 'update-plugin':
         await handleUpdatePlugin(args, flags);
         break;
+      case 'new':
+        await handleNew(args, flags);
+        break;
       default:
         console.error(`Unknown command: ${command}`);
         printHelp();
@@ -429,3 +458,26 @@ async function main() {
 }
 
 main();
+async function handleNew(args: string[], flags: Record<string, any>) {
+  const name = args[0];
+  if (!name) {
+    console.error('new requires a <name> argument');
+    process.exitCode = 1;
+    return;
+  }
+  const dir = flags.dir || process.cwd();
+  const { scaffoldNewPlugin } = await import('./scaffold.js');
+  await scaffoldNewPlugin({
+    cwd: dir,
+    pluginName: name,
+    description: flags.description,
+    version: flags.version,
+    authorName: flags['author-name'],
+    authorEmail: flags['author-email'],
+    marketplaceName: flags['marketplace-name'],
+    ownerName: flags['owner-name'],
+    ownerEmail: flags['owner-email'],
+    force: flags.force,
+  });
+  console.log(`Created new plugin scaffold at ${dir}`);
+}
