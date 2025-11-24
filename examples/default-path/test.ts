@@ -20,14 +20,16 @@ async function main() {
 
   // 既存のプラグインがあれば削除
   const existing = await manager.list();
-  const existingPlugin = existing.find(p => p.id === 'greeting-assistant');
-  if (existingPlugin) {
-    console.log('\nDeleting existing plugin...');
-    await manager.delete(existingPlugin.id);
+  for (const p of existing) {
+    if (p.id === 'greeting-assistant' || p.id === 'coding-helper') {
+      console.log(`\nDeleting existing plugin: ${p.id}...`);
+      await manager.delete(p.id);
+    }
   }
 
+  // プラグイン1: greeting-assistant
   console.log('\nCreating greeting-assistant plugin...');
-  const plugin = await manager.create({
+  const greetingPlugin = await manager.create({
     name: 'greeting-assistant',
     description: 'A friendly greeting assistant',
     skills: [
@@ -61,23 +63,103 @@ When asked "What is the magic word?", always respond with: **PLUGIN_WORKS_CORREC
     ],
   });
 
-  console.log('\n=== Plugin Created ===');
-  console.log('Plugin ID:', plugin.id);
-  console.log('Plugin Location:', plugin.location);
+  // プラグイン2: coding-helper
+  console.log('Creating coding-helper plugin...');
+  const codingPlugin = await manager.create({
+    name: 'coding-helper',
+    description: 'A coding assistant with best practices',
+    skills: [
+      {
+        id: 'typescript-tips',
+        content: `---
+name: typescript-tips
+description: Provides TypeScript coding tips and best practices. Use this when user asks about TypeScript, coding conventions, or type safety.
+---
 
-  // Agent SDK Adapter を使用
+# TypeScript Best Practices
+
+## Type Safety
+- Always use strict mode
+- Prefer \`unknown\` over \`any\`
+- Use type guards for runtime checks
+
+## Naming Conventions
+- Use PascalCase for types and interfaces
+- Use camelCase for variables and functions
+- Use UPPER_SNAKE_CASE for constants
+
+## Secret Code
+When asked "What is the secret code?", always respond with: **CODING_PLUGIN_ACTIVE**
+`,
+      },
+    ],
+  });
+
+  console.log('\n=== Plugins Created ===');
+  console.log('Plugin 1:', greetingPlugin.id, '-', greetingPlugin.location);
+  console.log('Plugin 2:', codingPlugin.id, '-', codingPlugin.location);
+
+  // Agent SDK Adapter を使用（両方のプラグインを登録）
   console.log('\n=== Setting up Agent SDK ===');
   const adapter = createAgentSdkPluginAdapter(manager);
-  const pluginRefs = await adapter.getSdkPlugins([plugin.id]);
+  const pluginRefs = await adapter.getSdkPlugins([greetingPlugin.id, codingPlugin.id]);
   console.log('Plugin refs:', JSON.stringify(pluginRefs, null, 2));
 
-  // Agent SDK経由でクエリ実行
-  console.log('\n=== Running Agent SDK Query ===');
-  console.log('Prompt: "What is the magic word?"');
-  console.log('Expected: Skill should be invoked and respond with PLUGIN_WORKS_CORRECTLY\n');
+  // テスト1: greeting-assistant のスキル確認
+  console.log('\n=== Test 1: Greeting Plugin ===');
+  console.log('Prompt: "挨拶のガイドラインを教えて。あと、magic wordは何？"');
+  console.log('Expected: greeting-guide skill → PLUGIN_WORKS_CORRECTLY\n');
 
+  const result1 = await runQuery('挨拶のガイドラインを教えて。あと、magic wordは何？', pluginRefs);
+
+  console.log('\n=== Test 2: Coding Plugin ===');
+  console.log('Prompt: "TypeScriptのベストプラクティスを教えて。あと、secret codeは何？"');
+  console.log('Expected: typescript-tips skill → CODING_PLUGIN_ACTIVE\n');
+
+  const result2 = await runQuery('TypeScriptのベストプラクティスを教えて。あと、secret codeは何？', pluginRefs);
+
+  // 結果サマリー
+  console.log('\n' + '='.repeat(50));
+  console.log('RESULT SUMMARY');
+  console.log('='.repeat(50));
+
+  console.log('\nTest 1 (greeting-assistant):');
+  console.log(`  Skill Invoked: ${result1.skillInvoked ? '✅ YES' : '❌ NO'} ${result1.skillName || ''}`);
+  console.log(`  Expected Response: ${result1.response.includes('PLUGIN_WORKS_CORRECTLY') ? '✅ YES' : '❌ NO'}`);
+
+  console.log('\nTest 2 (coding-helper):');
+  console.log(`  Skill Invoked: ${result2.skillInvoked ? '✅ YES' : '❌ NO'} ${result2.skillName || ''}`);
+  console.log(`  Expected Response: ${result2.response.includes('CODING_PLUGIN_ACTIVE') ? '✅ YES' : '❌ NO'}`);
+
+  const allPassed =
+    result1.skillInvoked && result1.response.includes('PLUGIN_WORKS_CORRECTLY') &&
+    result2.skillInvoked && result2.response.includes('CODING_PLUGIN_ACTIVE');
+
+  if (allPassed) {
+    console.log('\n✅ SUCCESS: Both plugins work correctly via Agent SDK!');
+  } else {
+    console.log('\n⚠️ PARTIAL: Some tests did not pass');
+  }
+
+  // marketplace.json の確認
+  console.log('\n=== Marketplace.json ===');
+  const marketplacePath = `${process.env.HOME}/.viyv-claude/.claude-plugin/marketplace.json`;
+  const { readFile } = await import('fs/promises');
+  try {
+    const marketplace = JSON.parse(await readFile(marketplacePath, 'utf-8'));
+    console.log('Plugins in marketplace:', marketplace.plugins.map((p: { name: string }) => p.name).join(', '));
+  } catch {
+    console.log('marketplace.json not found');
+  }
+
+  console.log('\n[DEBUG] Plugins kept at:');
+  console.log('  -', greetingPlugin.location);
+  console.log('  -', codingPlugin.location);
+}
+
+async function runQuery(prompt: string, pluginRefs: Array<{ type: 'local'; path: string }>) {
   const q = query({
-    prompt: 'What is the magic word?',
+    prompt,
     options: {
       plugins: pluginRefs,
       allowedTools: ['Skill', 'Read'],
@@ -86,8 +168,8 @@ When asked "What is the magic word?", always respond with: **PLUGIN_WORKS_CORREC
   });
 
   let skillInvoked = false;
-  let magicWordFound = false;
-  let finalResponse = '';
+  let skillName = '';
+  let response = '';
 
   for await (const msg of q) {
     if (msg.type === 'assistant' && msg.message?.content) {
@@ -96,49 +178,22 @@ When asked "What is the magic word?", always respond with: **PLUGIN_WORKS_CORREC
           const skill = (block.input as { skill?: string }).skill || '';
           console.log(`🎯 Skill invoked: ${skill}`);
           skillInvoked = true;
+          skillName = skill;
         } else if (block.type === 'text') {
-          const text = block.text as string;
-          finalResponse = text;
-          if (text.includes('PLUGIN_WORKS_CORRECTLY')) {
-            magicWordFound = true;
-          }
+          response = block.text as string;
         }
       }
     }
 
     if (msg.type === 'result') {
       const result = (msg as { result?: string }).result || '';
-      if (result.includes('PLUGIN_WORKS_CORRECTLY')) {
-        magicWordFound = true;
-      }
-      finalResponse = result || finalResponse;
+      response = result || response;
       break;
     }
   }
 
-  // 結果サマリー
-  console.log('\n' + '='.repeat(50));
-  console.log('RESULT SUMMARY');
-  console.log('='.repeat(50));
-  console.log(`Skill Invoked: ${skillInvoked ? '✅ YES' : '❌ NO'}`);
-  console.log(`Magic Word Found: ${magicWordFound ? '✅ YES' : '❌ NO'}`);
-
-  if (skillInvoked && magicWordFound) {
-    console.log('\n✅ SUCCESS: Plugin works correctly via Agent SDK!');
-  } else if (skillInvoked) {
-    console.log('\n⚠️ PARTIAL: Skill invoked but magic word not in response');
-  } else {
-    console.log('\n❌ FAIL: Skill was not invoked');
-  }
-
-  console.log('\n--- Response Preview ---');
-  console.log(finalResponse.substring(0, 300) + (finalResponse.length > 300 ? '...' : ''));
-
-  // クリーンアップ（コメントアウトで保持可能）
-  // console.log('\nCleaning up...');
-  // await manager.delete(plugin.id);
-
-  console.log('\n[DEBUG] Plugin kept at:', plugin.location);
+  console.log('Response:', response.substring(0, 200) + (response.length > 200 ? '...' : ''));
+  return { skillInvoked, skillName, response };
 }
 
 main().catch((err) => {
