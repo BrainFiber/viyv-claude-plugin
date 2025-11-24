@@ -1,0 +1,19 @@
+{
+  "name": "viyv-claude-plugin",
+  "owner": {
+    "name": "Hiroki Takezawa",
+    "email": "hiroki.takezawa@brainfiber.net"
+  },
+  "plugins": [
+    {
+      "name": "viyv-claude-plugin-guide",
+      "source": "./plugins/viyv-claude-plugin-guide",
+      "description": "viyv-claude-pluginの使い方ガイドスキル集",
+      "version": "1.0.0",
+      "author": {
+        "name": "Hiroki Takezawa",
+        "email": "hiroki.takezawa@brainfiber.net"
+      }
+    }
+  ]
+}

@@ -3,8 +3,8 @@
   "description": "viyv-claude-pluginの使い方ガイドスキル集",
   "version": "1.0.0",
   "author": {
-    "name": "Local Dev",
-    "email": ""
+    "name": "Hiroki Takezawa",
+    "email": "hiroki.takezawa@brainfiber.net"
   },
   "skills": "./skills"
 }
