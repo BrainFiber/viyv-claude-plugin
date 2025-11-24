@@ -1,0 +1,17 @@
+{
+  "name": "agent-sdk-local-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --no-wait-for-watchman --no-node-warnings --no-swcrc index.ts",
+    "start:node": "node dist/index.cjs",
+    "subagents": "tsx --no-wait-for-watchman --no-node-warnings --no-swcrc agent-subagents.ts"
+  },
+  "dependencies": {
+    "@viyv-claude-plugin": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}

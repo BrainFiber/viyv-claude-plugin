@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    {
+      "type": "local",
+      "path": "/Users/hiroki/.viyv-claude/plugins/plugins/spec-compliant-plugin"
+    }
+  ]
+}

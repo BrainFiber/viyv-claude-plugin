@@ -1,0 +1,70 @@
+.wrapper {
+    padding: 4rem 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.lead {
+    font-size: 1.5rem;
+    color: var(--muted-foreground);
+    margin-bottom: 4rem;
+}
+
+.card {
+    padding: 3rem;
+    border-radius: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.heading {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.text {
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    transition: all 0.2s;
+}
+
+.button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--foreground);
+}
+
+.secondary:hover {
+    border-color: var(--foreground);
+}

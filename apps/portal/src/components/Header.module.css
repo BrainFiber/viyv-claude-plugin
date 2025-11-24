@@ -1,0 +1,61 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 50;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo {
+    font-family: var(--font-sora);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--foreground);
+    letter-spacing: -0.02em;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.link {
+    font-size: 0.95rem;
+    color: var(--muted-foreground);
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: var(--foreground);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.github {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    transition: all 0.2s;
+}
+
+.github:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}

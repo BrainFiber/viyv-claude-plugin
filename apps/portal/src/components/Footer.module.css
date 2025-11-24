@@ -1,0 +1,32 @@
+.footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    background: var(--background);
+    margin-top: auto;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.link {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: var(--foreground);
+}

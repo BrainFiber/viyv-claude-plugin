@@ -1,0 +1,229 @@
+.hero {
+    padding: 8rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.hero.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.content {
+    max-width: 600px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+}
+
+.badgeDot {
+    width: 8px;
+    height: 8px;
+    background: var(--secondary);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--secondary);
+}
+
+.title {
+    font-size: 4rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.gradientText {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
+}
+
+.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 118, 255, 0.23);
+}
+
+.secondary {
+    background: var(--card-bg);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+}
+
+.secondary:hover {
+    border-color: var(--foreground);
+}
+
+.stats {
+    display: flex;
+    gap: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.statValue {
+    font-family: var(--font-sora);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.visual {
+    position: relative;
+}
+
+.card {
+    position: relative;
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+    transition: transform 0.5s ease;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.card:hover {
+    transform: perspective(1000px) rotateY(0) rotateX(0);
+}
+
+.heroImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.8;
+    mix-blend-mode: overlay;
+}
+
+.codeOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--glass-border);
+}
+
+.cardHeader {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--muted-foreground);
+    opacity: 0.3;
+}
+
+.code {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.keyword {
+    color: var(--accent);
+}
+
+.function {
+    color: var(--secondary);
+}
+
+.string {
+    color: #10b981;
+}
+
+.comment {
+    color: var(--muted-foreground);
+    font-style: italic;
+}
+
+.variable {
+    color: var(--foreground);
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .content {
+        margin: 0 auto;
+    }
+
+    .actions {
+        justify-content: center;
+    }
+
+    .stats {
+        justify-content: center;
+    }
+
+    .visual {
+        display: none;
+    }
+}

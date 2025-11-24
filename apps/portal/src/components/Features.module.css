@@ -1,0 +1,66 @@
+.features {
+    padding: 6rem 0;
+    background: var(--background);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.features.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 5rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary);
+}
+
+.icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+    font-family: var(--font-sora);
+}
+
+.cardText {
+    color: var(--muted-foreground);
+    line-height: 1.6;
+}

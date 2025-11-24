@@ -1,0 +1,72 @@
+.wrapper {
+    padding: 4rem 0;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.lead {
+    font-size: 1.5rem;
+    color: var(--muted-foreground);
+    margin-bottom: 4rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    border-radius: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+}
+
+.errorHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.errorIcon {
+    font-size: 1.5rem;
+}
+
+.errorHeader h3 {
+    font-size: 1.25rem;
+    color: #ef4444;
+    font-family: var(--font-fira-code);
+}
+
+.errorBody {
+    color: var(--muted-foreground);
+    line-height: 1.6;
+}
+
+.cause,
+.solution {
+    margin-bottom: 1rem;
+}
+
+.cause strong,
+.solution strong {
+    color: var(--foreground);
+    margin-right: 0.5rem;
+}
+
+.solution code {
+    color: var(--primary);
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: var(--font-fira-code);
+    font-size: 0.9rem;
+}

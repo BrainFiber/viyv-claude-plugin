@@ -1,0 +1,19 @@
+{
+  "name": "knowledge-base-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts",
+    "sdk": "tsx agent-sdk.ts",
+    "test:scenario1": "tsx agent-sdk.ts --scenario 1",
+    "test:scenario2": "tsx agent-sdk.ts --scenario 2",
+    "test:scenario3": "tsx agent-sdk.ts --scenario 3"
+  },
+  "dependencies": {
+    "@viyv-claude-plugin": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "subagents-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "skill-test": "tsx skill-to-agent.ts",
+    "skill-test:explicit": "tsx skill-to-agent.ts --explicit",
+    "workflow-test": "tsx workflow-test.ts"
+  },
+  "dependencies": {
+    "@viyv-claude-plugin": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}

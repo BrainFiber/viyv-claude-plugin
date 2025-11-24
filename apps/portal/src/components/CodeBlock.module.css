@@ -1,0 +1,52 @@
+.container {
+    margin: 1.5rem 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #0d1117;
+    /* Dark background for code always looks good */
+}
+
+.filename {
+    padding: 0.5rem 1rem;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    font-size: 0.8rem;
+    color: #8b949e;
+    font-family: var(--font-fira-code);
+}
+
+.wrapper {
+    position: relative;
+}
+
+.pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 0;
+}
+
+.code {
+    font-family: var(--font-fira-code);
+    font-size: 0.9rem;
+    color: #e6edf3;
+    line-height: 1.5;
+}
+
+.copyButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #c9d1d9;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copyButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
