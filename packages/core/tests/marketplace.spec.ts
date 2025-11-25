@@ -2,9 +2,10 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { mkdtemp, rm } from 'fs/promises';
 import fse from 'fs-extra';
-import { describe, expect, it, beforeEach, afterEach } from 'vitest';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import { createPluginManager } from '../src/index.js';
 import { MarketplaceManager } from '../src/marketplace/MarketplaceManager.js';
+import * as atomic from '../src/utils/atomic-write.js';
 
 const { ensureDir, writeJson, readJson } = fse;
 
@@ -104,5 +105,35 @@ describe('Marketplace sync', () => {
     // plugins not array
     await writeJson(marketplacePath(), { name: 'ok', owner: { name: 'x' }, plugins: {} });
     await expect(manager.read()).rejects.toThrow(/plugins must be an array/);
+  });
+
+  it('wraps write failures', async () => {
+    const manager = new MarketplaceManager(root);
+    const spy = vi.spyOn(atomic, 'atomicWrite').mockRejectedValue(new Error('disk full'));
+    await expect(
+      manager.write({ name: 'x', owner: { name: 'owner' }, plugins: [] })
+    ).rejects.toThrow(/Failed to write marketplace/);
+    spy.mockRestore();
+  });
+
+  it('derives default marketplace name and ignores missing removals', async () => {
+    const customRoot = join(root, 'My Custom Root');
+    const manager = new MarketplaceManager(customRoot);
+
+    const created = await manager.read();
+    expect(created.name).toBe('my-custom-root');
+
+    // removePlugin should no-op when plugin not found
+    await expect(manager.removePlugin('absent')).resolves.toBeUndefined();
+    const after = await manager.read();
+    expect(after.plugins).toEqual([]);
+
+    const punctRoot = join(root, '!!!');
+    await ensureDir(punctRoot);
+    const fallback = await new MarketplaceManager(punctRoot).read();
+    expect(fallback.name).toBe('local-marketplace');
+
+    const emptyRootManager = new MarketplaceManager('');
+    expect((emptyRootManager as any).defaultName).toBe('local-marketplace');
   });
 });

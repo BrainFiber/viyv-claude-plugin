@@ -26,12 +26,16 @@ function extractFrontmatter(content: string): Frontmatter {
 }
 
 function hasXmlTags(value: string | undefined): boolean {
-  if (!value) return false;
+  if (!value) {
+    return false;
+  }
   return /<[^>]+>/.test(value);
 }
 
 function containsReserved(value: string | undefined): boolean {
-  if (!value) return false;
+  if (!value) {
+    return false;
+  }
   return RESERVED.some((word) => value.toLowerCase().includes(word));
 }
 
@@ -91,3 +95,10 @@ export function validateSkillInput(skill: SkillInput): void {
     }
   }
 }
+
+// Exposed for white-box tests to ensure guard clauses stay defensive
+export const __skillTestUtils = {
+  extractFrontmatter,
+  hasXmlTags,
+  containsReserved,
+};

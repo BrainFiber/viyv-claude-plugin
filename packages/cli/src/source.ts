@@ -144,3 +144,11 @@ export async function detectPluginSource(dir: string): Promise<PluginSourceDetec
 
   return { type: 'none' };
 }
+
+// Internal hooks for white-box tests
+export const __sourceTestUtils = {
+  downloadAndUnzip,
+  fetchGithub,
+  fetchGit,
+  hasGit,
+};

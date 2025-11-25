@@ -40,6 +40,18 @@ describe('PluginFileSystem', () => {
     await expect(fsys.readSkill(pluginPath, 'missing')).rejects.toThrow(/Failed to read skill/);
   });
 
+  it('removes hooks and mcp data', async () => {
+    const pluginPath = await fsys.createPluginDir('p3');
+    await fsys.writeHooksConfig(pluginPath, { hooks: {} });
+    await fsys.writeMcpServers(pluginPath, { demo: { command: 'echo' } });
+
+    await fsys.removeHooks(pluginPath);
+    await fsys.removeMcp(pluginPath);
+
+    expect(await pathExists(join(pluginPath, 'hooks'))).toBe(false);
+    expect(await pathExists(join(pluginPath, '.mcp.json'))).toBe(false);
+  });
+
   it('returns plugin path helper', () => {
     expect(fsys.getPluginPath('abc')).toBe(join(root, 'plugins', 'abc'));
   });

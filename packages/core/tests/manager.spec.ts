@@ -393,11 +393,32 @@ describe('ClaudePluginManager', () => {
     const manager = await createPluginManager();
     await manager.create({ name: 'One', tags: ['a'] });
     await manager.create({ name: 'Two', tags: ['b'] });
+    await manager.create({ name: 'NoTags' });
     const filtered = await manager.list({ tags: ['b'] });
     expect(filtered).toHaveLength(1);
     expect(filtered[0].id).toBe('two');
 
     await expect(manager.create({ name: 'Two' })).rejects.toThrow(/already exists/);
+  });
+
+  it('removes skills when updated with empty array', async () => {
+    const manager = await createPluginManager();
+    const created = await manager.create({
+      name: 'SkillRemover',
+      skills: [
+        {
+          id: 'to-remove',
+          content: ['---', 'name: to-remove', 'description: remove me', '---', '# body'].join('\n'),
+        },
+      ],
+    });
+
+    await manager.update(created.id, { description: 'updated', skills: [] });
+
+    expect(await pathExists(join(created.location, 'skills', 'to-remove'))).toBe(false);
+    const json = await fse.readJson(join(created.location, '.claude-plugin', 'plugin.json'));
+    expect(json.skills).toBeUndefined();
+    expect(json.description).toBe('updated');
   });
 
   it('adapts plugin IDs to Agent SDK refs and rejects unknown IDs', async () => {
@@ -411,6 +432,23 @@ describe('ClaudePluginManager', () => {
     ]);
 
     await expect(adapter.getSdkPlugins(['missing-one'])).rejects.toThrow(/not found/i);
+  });
+
+  it('fails when registry cannot return updated plugin', async () => {
+    const manager = await createPluginManager();
+    const created = await manager.create({ name: 'Unstable Registry' });
+
+    const registry = (manager as any).registry;
+    const originalFind = registry.findPlugin.bind(registry);
+    const findSpy = vi.spyOn(registry, 'findPlugin');
+    findSpy.mockImplementationOnce(originalFind); // initial lookup succeeds
+    findSpy.mockImplementationOnce(async () => undefined); // post-update lookup fails
+
+    await expect(
+      manager.update(created.id, { description: 'new desc' })
+    ).rejects.toThrow(/Failed to retrieve updated plugin/);
+
+    findSpy.mockRestore();
   });
 });
 

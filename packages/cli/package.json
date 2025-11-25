@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "viyv-claude-plugin-core": "workspace:*",
+    "@vitest/coverage-v8": "^4.0.13",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }

@@ -24,6 +24,12 @@ describe('RegistryManager', () => {
     expect(data.version).toBeTruthy();
   });
 
+  it('upgrades legacy registry with non-array plugins', async () => {
+    await writeJson(join(root, 'registry.json'), { plugins: 'oops' });
+    const data = await registry.read();
+    expect(data.plugins).toEqual([]);
+  });
+
   it('throws on invalid registry shape', async () => {
     await writeJson(join(root, 'registry.json'), { version: '1.0.0', plugins: 'nope' });
     await expect(registry.read()).rejects.toThrow(/Invalid registry/);

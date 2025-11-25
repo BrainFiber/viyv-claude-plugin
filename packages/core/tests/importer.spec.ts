@@ -91,4 +91,31 @@ describe('PluginImporter', () => {
       /Failed to download zip/
     );
   });
+
+  it('skips stray entries when extracting rooted archives', async () => {
+    const zip = new AdmZip();
+    zip.addFile('root', Buffer.from('orphan')); // will be ignored by extractZip loop
+    zip.addFile('root/.claude-plugin/plugin.json', Buffer.from('{"name":"Mixed","version":"1.0.0"}'));
+    const zipPath = join(root, 'mixed.zip');
+    zip.writeZip(zipPath);
+
+    const extracted = await (importer as any).extractZip(zipPath, 'mixed');
+    const pluginJson = await readJson(join(extracted, '.claude-plugin', 'plugin.json'));
+    expect(pluginJson.name).toBe('Mixed');
+  });
+
+  it('detects missing single root folder', () => {
+    const entries = [
+      { entryName: 'one/file.txt' },
+      { entryName: 'two/other.txt' },
+    ] as any;
+    const rootName = (importer as any).detectRootFolder(entries);
+    expect(rootName).toBeNull();
+  });
+
+  it('ignores empty entry names when detecting root folder', () => {
+    const entries = [{ entryName: '' }, { entryName: 'root/file.txt' }] as any;
+    const rootName = (importer as any).detectRootFolder(entries);
+    expect(rootName).toBe('root');
+  });
 });

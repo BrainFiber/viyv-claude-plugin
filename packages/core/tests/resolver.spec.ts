@@ -29,6 +29,13 @@ describe('resolvePluginRoot', () => {
     expect(getDefaultPluginRoot()).toContain(fakeHome);
   });
 
+  it('falls back to homedir when no env or config exists', async () => {
+    process.env.CLAUDE_HOME = '';
+    process.env.HOME = '';
+    process.env.USERPROFILE = '';
+    expect(await resolvePluginRoot()).toBe(getDefaultPluginRoot());
+  });
+
   it('falls back to config.json when env not set', async () => {
     const fakeHome = join(tempHome, 'home1');
     process.env.HOME = fakeHome;

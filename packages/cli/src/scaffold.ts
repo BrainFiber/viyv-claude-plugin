@@ -98,3 +98,9 @@ export async function scaffoldNewPlugin(opts: ScaffoldOptions) {
     vars
   );
 }
+
+// Internal test helpers
+export const __scaffoldTestUtils = {
+  slugify,
+  renderTemplate,
+};
