@@ -32,6 +32,10 @@ export default function GettingStarted() {
                 { type: 'command', text: 'npx viyv-claude-plugin setup' },
                 { type: 'output', text: 'Registered marketplace: local-marketplace' },
                 { type: 'output', text: '' },
+                { type: 'comment', text: 'Guide Plugin をインストール（推奨）' },
+                { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
+                { type: 'output', text: 'Installed: viyv-claude-plugin-guide' },
+                { type: 'output', text: '' },
                 { type: 'success', text: 'セットアップ完了!' },
               ]}
             />
@@ -130,7 +134,7 @@ description: Provides document search. Auto-invoke when user mentions: search, �
                   title="Guide Pluginのインストール"
                   className={styles.miniTerminal}
                   lines={[
-                    { type: 'command', text: 'npx viyv-claude-plugin install github:BrainFiber/viyv-claude-plugin' },
+                    { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
                     { type: 'output', text: 'Installed: viyv-claude-plugin-guide' },
                   ]}
                 />

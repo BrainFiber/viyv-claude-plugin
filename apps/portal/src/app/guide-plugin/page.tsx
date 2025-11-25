@@ -39,7 +39,7 @@ export default function GuidePluginPage() {
           <Terminal
             title="Install Guide Plugin"
             lines={[
-              { type: 'command', text: 'npx viyv-claude-plugin install github:BrainFiber/viyv-claude-plugin' },
+              { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
               { type: 'output', text: '' },
               { type: 'output', text: 'Installed plugin: viyv-claude-plugin-guide (1.0.0)' },
               { type: 'output', text: '' },
@@ -160,7 +160,7 @@ PRの差分を分析し、改善点やバグの可能性を指摘します。
             title="Complete Workflow"
             lines={[
               { type: 'comment', text: '1. Guide Plugin をインストール' },
-              { type: 'command', text: 'npx viyv-claude-plugin install github:BrainFiber/viyv-claude-plugin' },
+              { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
               { type: 'output', text: '' },
               { type: 'comment', text: '2. 新規プロジェクトを作成' },
               { type: 'command', text: 'npx viyv-claude-plugin new my-skills' },
