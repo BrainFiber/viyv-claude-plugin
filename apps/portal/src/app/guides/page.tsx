@@ -44,7 +44,7 @@ export default function Guides() {
 
                     <CodeBlock
                         filename="workflow-demo.ts"
-                        code={`import { createPluginManager } from '@viyv-claude-plugin';
+                        code={`import { createPluginManager } from 'viyv-claude-plugin-core';
 
 const manager = await createPluginManager();
 

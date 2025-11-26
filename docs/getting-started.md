@@ -4,13 +4,13 @@
 
 ```bash
 pnpm install
-pnpm --filter @viyv-claude-plugin build
+pnpm --filter viyv-claude-plugin-core build
 ```
 
 ### Use the library
 
 ```typescript
-import { createPluginManager } from '@viyv-claude-plugin';
+import { createPluginManager } from 'viyv-claude-plugin-core';
 
 const manager = await createPluginManager();
 

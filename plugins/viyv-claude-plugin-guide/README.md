@@ -37,7 +37,7 @@ Claude Code でこのプラグインをインストールすると、CLI コマ�
 
 ```bash
 # このリポジトリのルートで
-npx @viyv-claude-plugin/cli setup
+npx viyv-claude-plugin setup
 ```
 
 ## 使い方

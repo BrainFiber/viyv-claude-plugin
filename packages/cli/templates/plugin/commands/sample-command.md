@@ -1,10 +1,21 @@
 ---
 name: sample-command
-description: A sample slash command
+description: Sample slash command that demonstrates the command format.
 ---
 # Sample Command
 
-This command does something useful.
+## 概要
+このコマンドの機能を記述してください。
 
-## Usage
-/sample-command [args]
+## 使用方法
+```
+/sample-command [引数]
+```
+
+## 引数
+- `引数`: 説明
+
+## 例
+```
+/sample-command example
+```

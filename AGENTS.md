@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- Monorepo root: `packages/` (core library `@viyv-claude-plugin`), `apps/portal/` (Next.js docs site), `examples/` (basic-usage, full-coverage), `docs/` (markdown guides).
+- Monorepo root: `packages/` (core library `viyv-claude-plugin-core`), `apps/portal/` (Next.js docs site), `examples/` (basic-usage, full-coverage), `docs/` (markdown guides).
 - Core source: `packages/core/src/`; tests live beside in `packages/core/tests/`.
 - Portal pages/components: `apps/portal/src/app/`, `apps/portal/src/components/`.
 - Shared configs: `tsconfig.base.json`, `pnpm-workspace.yaml`, root `package.json`.
@@ -9,10 +9,10 @@
 ## Build, Test, and Development Commands
 - Install deps: `pnpm install`
 - Build all: `pnpm build` (runs `pnpm -r build`)
-- Core only: `pnpm --filter @viyv-claude-plugin build`
+- Core only: `pnpm --filter viyv-claude-plugin-core build`
 - Portal: `pnpm --filter portal build`
 - Tests (all): `pnpm test`
-- Core tests + coverage: `pnpm --filter @viyv-claude-plugin test -- --coverage`
+- Core tests + coverage: `pnpm --filter viyv-claude-plugin-core test -- --coverage`
 - Dev portal: `pnpm --filter portal dev`
 
 ## Coding Style & Naming Conventions
@@ -25,7 +25,7 @@
 - Framework: Vitest in `packages/core`.
 - Aim to keep coverage at or above current baseline (~99% lines for core); add tests for new paths and error cases.
 - Name tests with `.spec.ts` under `packages/core/tests/`; keep Arrange/Act/Assert clear.
-- Run `pnpm --filter @viyv-claude-plugin test -- --coverage` before PRs affecting core logic.
+- Run `pnpm --filter viyv-claude-plugin-core test -- --coverage` before PRs affecting core logic.
 
 ## Commit & Pull Request Guidelines
 - Commit messages: concise imperative style (e.g., `Add adapter coverage`, `Fix portal hero copy`).

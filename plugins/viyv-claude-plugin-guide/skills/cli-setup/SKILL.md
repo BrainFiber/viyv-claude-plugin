@@ -9,7 +9,7 @@ description: Provides guide for viyv-claude-plugin setup command to register mar
 ローカルマーケットプレイスをClaude Codeに登録します。
 
 ```bash
-npx @viyv-claude-plugin/cli setup [options]
+npx viyv-claude-plugin setup [options]
 ```
 
 ### オプション
@@ -24,13 +24,13 @@ npx @viyv-claude-plugin/cli setup [options]
 
 ```bash
 # カレントディレクトリのマーケットプレイスを登録
-npx @viyv-claude-plugin/cli setup
+npx viyv-claude-plugin setup
 
 # 特定のパスを指定
-npx @viyv-claude-plugin/cli setup -p /path/to/marketplace
+npx viyv-claude-plugin setup -p /path/to/marketplace
 
 # カスタム名で登録
-npx @viyv-claude-plugin/cli setup -n "My Plugins"
+npx viyv-claude-plugin setup -n "My Plugins"
 ```
 
 ## uninstall - マーケットプレイスの削除
@@ -38,17 +38,17 @@ npx @viyv-claude-plugin/cli setup -n "My Plugins"
 登録済みのマーケットプレイスをClaude Codeから削除します。
 
 ```bash
-npx @viyv-claude-plugin/cli uninstall [options]
+npx viyv-claude-plugin uninstall [options]
 ```
 
 ### 使用例
 
 ```bash
 # カレントディレクトリのマーケットプレイスを削除
-npx @viyv-claude-plugin/cli uninstall
+npx viyv-claude-plugin uninstall
 
 # 名前を指定して削除
-npx @viyv-claude-plugin/cli uninstall -n "My Plugins"
+npx viyv-claude-plugin uninstall -n "My Plugins"
 ```
 
 ## update - マーケットプレイスの更新
@@ -56,17 +56,17 @@ npx @viyv-claude-plugin/cli uninstall -n "My Plugins"
 ソースからマーケットプレイスを更新します。プラグインの追加・変更後に実行してください。
 
 ```bash
-npx @viyv-claude-plugin/cli update [options]
+npx viyv-claude-plugin update [options]
 ```
 
 ### 使用例
 
 ```bash
 # マーケットプレイスを更新
-npx @viyv-claude-plugin/cli update
+npx viyv-claude-plugin update
 
 # 変更内容を確認（実行せず）
-npx @viyv-claude-plugin/cli update --dry-run
+npx viyv-claude-plugin update --dry-run
 ```
 
 ## 登録後の確認

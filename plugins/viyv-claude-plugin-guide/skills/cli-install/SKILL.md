@@ -9,7 +9,7 @@ description: Provides guide for viyv-claude-plugin install command. Auto-invoke 
 様々なソースからプラグインをインストールします。
 
 ```bash
-npx @viyv-claude-plugin/cli install <source> [name...] [options]
+npx viyv-claude-plugin install <source> [name...] [options]
 ```
 
 ### ソースタイプ
@@ -37,16 +37,16 @@ npx @viyv-claude-plugin/cli install <source> [name...] [options]
 
 ```bash
 # ローカルディレクトリからインストール
-npx @viyv-claude-plugin/cli install ./my-plugin
+npx viyv-claude-plugin install ./my-plugin
 
 # GitHubからインストール
-npx @viyv-claude-plugin/cli install github:user/repo
+npx viyv-claude-plugin install github:user/repo
 
 # 特定ブランチからインストール
-npx @viyv-claude-plugin/cli install github:user/repo --ref develop
+npx viyv-claude-plugin install github:user/repo --ref develop
 
 # マーケットプレイスから複数プラグインを選択インストール
-npx @viyv-claude-plugin/cli install ./marketplace plugin1 plugin2
+npx viyv-claude-plugin install ./marketplace plugin1 plugin2
 ```
 
 ## remove - プラグインの削除
@@ -54,17 +54,17 @@ npx @viyv-claude-plugin/cli install ./marketplace plugin1 plugin2
 インストール済みプラグインを削除します。
 
 ```bash
-npx @viyv-claude-plugin/cli remove <id> [options]
+npx viyv-claude-plugin remove <id> [options]
 ```
 
 ### 使用例
 
 ```bash
 # プラグインを削除
-npx @viyv-claude-plugin/cli remove my-plugin
+npx viyv-claude-plugin remove my-plugin
 
 # 削除前に確認
-npx @viyv-claude-plugin/cli remove my-plugin --dry-run
+npx viyv-claude-plugin remove my-plugin --dry-run
 ```
 
 ## update-plugin - プラグインの更新
@@ -72,7 +72,7 @@ npx @viyv-claude-plugin/cli remove my-plugin --dry-run
 プラグインを元のソースから再インストールして更新します。
 
 ```bash
-npx @viyv-claude-plugin/cli update-plugin <id> [options]
+npx viyv-claude-plugin update-plugin <id> [options]
 ```
 
 ### オプション
@@ -86,8 +86,8 @@ npx @viyv-claude-plugin/cli update-plugin <id> [options]
 
 ```bash
 # プラグインを更新
-npx @viyv-claude-plugin/cli update-plugin my-plugin
+npx viyv-claude-plugin update-plugin my-plugin
 
 # 別のブランチから更新
-npx @viyv-claude-plugin/cli update-plugin my-plugin --ref main
+npx viyv-claude-plugin update-plugin my-plugin --ref main
 ```

@@ -55,7 +55,7 @@
 
 ### 2.2 Getting Started
 - Quickstart (5分):
-  - コマンド: `pnpm install`, `pnpm --filter @viyv-claude-plugin build`
+  - コマンド: `pnpm install`, `pnpm --filter viyv-claude-plugin-core build`
   - 20行以内のサンプル（create → list → delete）。前提: Node18+ & pnpm。
   - チェックリスト UI（create/list/delete 成功に緑チェック）。
 - Environment & Config:
@@ -80,7 +80,7 @@
   1) create(全要素) 2) update(置換) 3) importFromPath/URL 4) delete + adapter  
   - 画像: ステップ進捗バー＋ターミナル出力スクショ。
 - Team/CI:
-  - コマンド例: `pnpm --filter @viyv-claude-plugin test -- --coverage`
+  - コマンド例: `pnpm --filter viyv-claude-plugin-core test -- --coverage`
   - `CLAUDE_PLUGIN_ROOT` を CI ワークスペースに向ける例。pnpm store キャッシュ案内。
 - Troubleshooting:
   - 表形式: 事象/原因/対処。例: plugin.json 不足, 壊れた zip, 重複 ID, tsx IPC 権限エラー(macOS→`node --loader tsx full-demo.ts` 推奨)。
@@ -97,7 +97,7 @@
   - 画像: ターミナル出力スクショ（create/update/import/delete/adapter）。
 
 ### 2.7 Downloads & Versioning
-- いまは workspace 利用。将来公開時の `pnpm add @viyv-claude-plugin` も記載。  
+- いまは workspace 利用。将来公開時の `pnpm add viyv-claude-plugin-core` も記載。  
 - SemVer ポリシー。破壊的変更はメジャーアップ。  
 - CHANGELOG 予定地を明示。
 
@@ -114,11 +114,11 @@
 
 ## 3. モノレポ構成（ポータルで明示）
 - ルート: `viyv-claude-plugin/`
-- パッケージ: `packages/core`（npm 名: `@viyv-claude-plugin`）
+- パッケージ: `packages/core`（npm 名: `viyv-claude-plugin-core`）
 - サンプル: `examples/basic-usage`, `examples/full-coverage`
 - ドキュメント: `docs/`（README ベース, getting-started, api-reference, 本ブリーフ）
 - ワークスペース: `pnpm-workspace.yaml`
-- コマンド: build `pnpm --filter @viyv-claude-plugin build`, test `pnpm --filter @viyv-claude-plugin test -- --coverage`
+- コマンド: build `pnpm --filter viyv-claude-plugin-core build`, test `pnpm --filter viyv-claude-plugin-core test -- --coverage`
 - ポータルから GitHub へリンクする際は上記パスを明示。
 
 ---
@@ -165,7 +165,7 @@
 
 ## 7. 完了の定義 (DoD)
 - 全ページがローカルでビルド表示可能。  
-- コードスニペットが `@viyv-claude-plugin` で最新 API と一致。  
+- コードスニペットが `viyv-claude-plugin-core` で最新 API と一致。  
 - Home→Getting Started→Examples→API が 3 クリック以内。  
 - 404 なし、Lighthouse (A11y/Best Practices/SEO/Perf) 90+。  
 - 指定図版 8 点以上、ライト/ダーク両テーマで視認性良好。

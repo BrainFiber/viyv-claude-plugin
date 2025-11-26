@@ -1,13 +1,13 @@
 # API Reference
 
-## Core API (`@viyv-claude-plugin`)
+## Core API (`viyv-claude-plugin-core`)
 
 ### `createPluginManager()`
 
 Create a plugin manager instance.
 
 ```typescript
-import { createPluginManager } from '@viyv-claude-plugin';
+import { createPluginManager } from 'viyv-claude-plugin-core';
 
 const manager = await createPluginManager();
 ```
@@ -172,7 +172,7 @@ const plugin = await manager.importFromUrl({
 Create an adapter for Claude Agent SDK.
 
 ```typescript
-import { createPluginManager, createAgentSdkPluginAdapter } from '@viyv-claude-plugin';
+import { createPluginManager, createAgentSdkPluginAdapter } from 'viyv-claude-plugin-core';
 
 const manager = await createPluginManager();
 const adapter = createAgentSdkPluginAdapter(manager);
@@ -280,7 +280,7 @@ type SdkPluginRef = {
 Resolve the plugin root directory.
 
 ```typescript
-import { resolvePluginRoot } from '@viyv-claude-plugin';
+import { resolvePluginRoot } from 'viyv-claude-plugin-core';
 
 const rootPath = await resolvePluginRoot();
 console.log(`Plugins are stored in: ${rootPath}`);
@@ -293,7 +293,7 @@ console.log(`Plugins are stored in: ${rootPath}`);
 Get the default plugin root directory.
 
 ```typescript
-import { getDefaultPluginRoot } from '@viyv-claude-plugin';
+import { getDefaultPluginRoot } from 'viyv-claude-plugin-core';
 
 const defaultPath = getDefaultPluginRoot();
 // Returns: ~/.viyv-claude/plugins

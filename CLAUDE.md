@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a pnpm monorepo for managing Claude-style plugins locally. The main package is `@viyv-claude-plugin` (packages/core), which provides a programmatic API for plugin CRUD operations, imports, and Claude Agent SDK integration.
+This is a pnpm monorepo for managing Claude-style plugins locally. The main package is `viyv-claude-plugin-core` (packages/core), which provides a programmatic API for plugin CRUD operations, imports, and Claude Agent SDK integration.
 
 ## Common Commands
 
@@ -19,10 +19,10 @@ pnpm build
 pnpm test
 
 # Run tests for core package with coverage
-pnpm --filter @viyv-claude-plugin test -- --coverage
+pnpm --filter viyv-claude-plugin-core test -- --coverage
 
 # Run a single test file
-pnpm --filter @viyv-claude-plugin test -- src/manager/ClaudePluginManagerImpl.test.ts
+pnpm --filter viyv-claude-plugin-core test -- src/manager/ClaudePluginManagerImpl.test.ts
 
 # Lint
 pnpm lint
@@ -41,7 +41,7 @@ pnpm --filter portal dev
 
 ### Monorepo Structure
 
-- `packages/core/` - Main library (`@viyv-claude-plugin`) - plugin management core
+- `packages/core/` - Main library (`viyv-claude-plugin-core`) - plugin management core
 - `apps/portal/` - Next.js web UI for plugin management
 - `examples/` - Usage examples (basic-usage, full-coverage)
 

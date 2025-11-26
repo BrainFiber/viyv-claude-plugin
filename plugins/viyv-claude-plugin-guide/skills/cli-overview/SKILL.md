@@ -24,15 +24,15 @@ viyv-claude-plugin CLIは、Claude Code用プラグインを管理するため�
 
 ```bash
 # 1. 新規プラグインプロジェクトを作成
-npx @viyv-claude-plugin/cli new my-plugin
+npx viyv-claude-plugin new my-plugin
 
 # 2. Claude Codeにマーケットプレイスを登録
-npx @viyv-claude-plugin/cli setup
+npx viyv-claude-plugin setup
 
 # 3. プラグインを編集・開発
 
 # 4. 変更を反映
-npx @viyv-claude-plugin/cli update
+npx viyv-claude-plugin update
 ```
 
 ## 共通オプション
@@ -46,8 +46,8 @@ npx @viyv-claude-plugin/cli update
 
 ```bash
 # グローバルインストール
-npm install -g @viyv-claude-plugin/cli
+npm install -g viyv-claude-plugin
 
 # または npx で直接実行
-npx @viyv-claude-plugin/cli <command>
+npx viyv-claude-plugin <command>
 ```

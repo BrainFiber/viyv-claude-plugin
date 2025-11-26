@@ -7,7 +7,7 @@ description: Provides guide for viyv-claude-plugin new command to scaffold plugi
 新規プラグインプロジェクト（マーケットプレイス + プラグイン）を作成します。
 
 ```bash
-npx @viyv-claude-plugin/cli new <name> [options]
+npx viyv-claude-plugin new <name> [options]
 ```
 
 ## オプション
@@ -28,17 +28,17 @@ npx @viyv-claude-plugin/cli new <name> [options]
 
 ```bash
 # 基本的な使い方
-npx @viyv-claude-plugin/cli new my-plugin
+npx viyv-claude-plugin new my-plugin
 
 # 詳細情報を指定
-npx @viyv-claude-plugin/cli new my-plugin \
+npx viyv-claude-plugin new my-plugin \
   --description "My awesome plugin" \
   --version "1.0.0" \
   --author-name "Your Name" \
   --author-email "you@example.com"
 
 # 別のディレクトリに作成
-npx @viyv-claude-plugin/cli new my-plugin --dir ./projects
+npx viyv-claude-plugin new my-plugin --dir ./projects
 ```
 
 ## 生成されるファイル構造
@@ -73,5 +73,5 @@ npx @viyv-claude-plugin/cli new my-plugin --dir ./projects
 
 ```bash
 # Claude Codeに登録
-npx @viyv-claude-plugin/cli setup
+npx viyv-claude-plugin setup
 ```

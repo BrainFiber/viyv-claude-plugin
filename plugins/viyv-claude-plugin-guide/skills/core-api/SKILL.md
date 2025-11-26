@@ -1,21 +1,21 @@
 ---
 name: core-api
-description: Provides TypeScript API guide for viyv-claude-plugin programmatic usage. Auto-invoke when user mentions: createPluginManager, TypeScript API, programmatic plugin management, @viyv-claude-plugin package. Do NOT use for: CLI commands, plugin file structure.
+description: Provides TypeScript API guide for viyv-claude-plugin programmatic usage. Auto-invoke when user mentions: createPluginManager, TypeScript API, programmatic plugin management, viyv-claude-plugin-core package. Do NOT use for: CLI commands, plugin file structure.
 ---
 # Core API プログラミングガイド
 
-`@viyv-claude-plugin` パッケージを使用してプログラムからプラグインを管理できます。
+`viyv-claude-plugin-core` パッケージを使用してプログラムからプラグインを管理できます。
 
 ## インストール
 
 ```bash
-npm install @viyv-claude-plugin
+npm install viyv-claude-plugin-core
 ```
 
 ## 基本的な使い方
 
 ```typescript
-import { createPluginManager } from '@viyv-claude-plugin';
+import { createPluginManager } from 'viyv-claude-plugin-core';
 
 async function main() {
   // マネージャーインスタンスを作成
@@ -180,7 +180,7 @@ try {
 `AgentSdkPluginAdapter` を使用してAgent SDKと連携可能:
 
 ```typescript
-import { AgentSdkPluginAdapter } from '@viyv-claude-plugin';
+import { AgentSdkPluginAdapter } from 'viyv-claude-plugin-core';
 
 const adapter = new AgentSdkPluginAdapter(manager);
 // Agent SDKでプラグインを利用
