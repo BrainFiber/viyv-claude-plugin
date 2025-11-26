@@ -256,6 +256,32 @@ describe('marketplace install flow', () => {
     }
   });
 
+  it('installs all plugins from marketplace by default when no names specified', async () => {
+    const mpDir = await createMarketplaceDir(sourceDir, [
+      { name: 'plugin-a', version: '1.0.0' },
+      { name: 'plugin-b', version: '2.0.0' },
+      { name: 'plugin-c', version: '3.0.0' },
+    ]);
+    const manager = new ClaudePluginManagerImpl(root);
+    const detection = await detectPluginSource(mpDir);
+
+    expect(detection.type).toBe('marketplace');
+    if (detection.type === 'marketplace') {
+      // Simulate default behavior: install all plugins when no names specified
+      for (const plugin of detection.plugins) {
+        const pluginPath = join(mpDir, plugin.source);
+        await manager.importFromPath({ path: pluginPath, name: plugin.name });
+      }
+
+      const installed = await manager.list();
+      expect(installed).toHaveLength(3);
+      const ids = installed.map(p => p.id);
+      expect(ids).toContain('plugin-a');
+      expect(ids).toContain('plugin-b');
+      expect(ids).toContain('plugin-c');
+    }
+  });
+
   it('updates plugin from marketplace by id', async () => {
     // Create initial marketplace with v1.0.0
     const mpDir1 = await createMarketplaceDir(sourceDir, [

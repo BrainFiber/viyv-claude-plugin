@@ -50,7 +50,7 @@ npx viyv-claude-plugin list
 
 # インストール
 npx viyv-claude-plugin install <source> [name...]
-npx viyv-claude-plugin install ./marketplace --all
+npx viyv-claude-plugin install ./marketplace
 
 # 削除
 npx viyv-claude-plugin remove <id>

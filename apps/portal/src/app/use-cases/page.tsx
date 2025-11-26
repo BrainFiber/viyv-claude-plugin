@@ -147,7 +147,7 @@ team-plugins/
     skillExample: `# インストール方法
 
 # GitHubから直接インストール
-npx viyv-claude-plugin install github:your-org/team-plugins --all
+npx viyv-claude-plugin install github:your-org/team-plugins
 
 # 特定のプラグインのみ
 npx viyv-claude-plugin install github:your-org/team-plugins team-standards

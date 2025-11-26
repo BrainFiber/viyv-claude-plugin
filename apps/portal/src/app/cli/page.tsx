@@ -37,7 +37,7 @@ const commands = [
     usage: 'npx viyv-claude-plugin install <source> [name...]',
     description: '様々なソースからプラグインをインストールします。',
     options: [
-      { flag: '--all', desc: 'マーケットプレイスの全プラグインをインストール' },
+      { flag: '--all', desc: '全プラグインをインストール（デフォルト動作）' },
       { flag: '--ref <ref>', desc: 'Git ブランチ/タグ/コミット' },
       { flag: '--force', desc: '既存プラグインを上書き' },
       { flag: '--dry-run', desc: '実行内容を表示のみ' },
@@ -193,7 +193,7 @@ export default function CLIPage() {
               <Terminal
                 title="Install All"
                 lines={[
-                  { type: 'command', text: 'npx viyv-claude-plugin install ./marketplace --all' },
+                  { type: 'command', text: 'npx viyv-claude-plugin install ./marketplace' },
                   { type: 'output', text: 'Installed plugin: plugin-a (1.0.0)' },
                   { type: 'output', text: 'Installed plugin: plugin-b (1.0.0)' },
                   { type: 'output', text: 'Installed plugin: plugin-c (1.0.0)' },

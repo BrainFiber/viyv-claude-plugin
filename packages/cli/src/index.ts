@@ -16,7 +16,7 @@ Commands:
   uninstall             Remove registered marketplace
   update                Update marketplace from its source
   list                  List installed plugins
-  install <source> [name...]  Install plugin(s) from source (--all for all plugins)
+  install <source> [name...]  Install plugin(s) from source (all by default)
   remove <id>           Remove a locally installed plugin
   update-plugin <id>    Re-install a plugin from its original source
   new <name>            Scaffold a marketplace + plugin in current directory
@@ -279,16 +279,12 @@ async function handleInstall(args: string[], flags: Record<string, any>) {
       return;
     }
 
-    // Multiple plugins - require name(s) to be specified
+    // Multiple plugins - install all by default (no name specified)
     if (pluginNames.length === 0) {
-      console.error('Error: Multiple plugins found. Specify plugin name(s):');
-      for (const p of plugins) {
-        const desc = p.description ? `: ${p.description}` : '';
-        const ver = p.version ? ` (${p.version})` : '';
-        console.error(`  - ${p.name}${ver}${desc}`);
+      for (const plugin of plugins) {
+        const pluginPath = join(fetch.path, plugin.source);
+        await installSinglePlugin(pluginPath, source, flags, manager, root, plugin.name);
       }
-      console.error('\nUsage: install <source> <name> [name...] or install <source> --all');
-      process.exitCode = 1;
       return;
     }
 

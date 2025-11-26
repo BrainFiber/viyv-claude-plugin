@@ -79,7 +79,7 @@ export function TerminalInstall() {
         { type: 'output', text: 'Installed plugin: my-plugin (1.0.0)' },
         { type: 'output', text: '' },
         { type: 'comment', text: 'Or install all plugins from marketplace' },
-        { type: 'command', text: 'npx viyv-claude-plugin install ./marketplace --all' },
+        { type: 'command', text: 'npx viyv-claude-plugin install ./marketplace' },
         { type: 'output', text: 'Installed plugin: plugin-a (1.0.0)' },
         { type: 'output', text: 'Installed plugin: plugin-b (1.0.0)' },
       ]}

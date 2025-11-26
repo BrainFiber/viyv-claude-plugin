@@ -42,7 +42,7 @@ npx viyv-claude-plugin install github:user/repo
 npx viyv-claude-plugin install ./path/to/plugin
 
 # マーケットプレイスから全プラグインをインストール
-npx viyv-claude-plugin install ./marketplace --all
+npx viyv-claude-plugin install ./marketplace
 ```
 
 ---
@@ -126,7 +126,7 @@ npx viyv-claude-plugin update-plugin <id>
 
 | オプション | 説明 |
 |-----------|------|
-| `--all` | マーケットプレイスの全プラグインをインストール |
+| `--all` | 全プラグインをインストール（デフォルト動作） |
 | `--ref <ref>` | Git ブランチ/タグ/コミット |
 | `--force` | 既存プラグインを上書き |
 | `--dry-run` | 実行内容を表示のみ |
