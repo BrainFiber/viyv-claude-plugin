@@ -89,13 +89,11 @@ export default function Hero() {
             <Terminal
               title="スキルを作成してすぐに利用"
               lines={[
-                { type: 'comment', text: '初回: マーケットプレイスをセットアップ' },
-                { type: 'command', text: 'npx viyv-claude-plugin setup' },
-                { type: 'output', text: 'Registered marketplace' },
-                { type: 'output', text: '' },
-                { type: 'comment', text: 'Guide Plugin をインストール（推奨）' },
+                { type: 'comment', text: '初回: Guide Plugin をインストール + セットアップ' },
                 { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
                 { type: 'output', text: 'Installed: viyv-claude-plugin-guide' },
+                { type: 'command', text: 'npx viyv-claude-plugin setup' },
+                { type: 'output', text: 'Registered marketplace: local-marketplace' },
                 { type: 'output', text: '' },
                 { type: 'comment', text: 'プラグイン作成' },
                 { type: 'command', text: 'npx viyv-claude-plugin new my-plugin' },

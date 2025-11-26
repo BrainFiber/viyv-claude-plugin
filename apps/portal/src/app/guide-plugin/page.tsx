@@ -40,8 +40,10 @@ export default function GuidePluginPage() {
             title="Install Guide Plugin"
             lines={[
               { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
-              { type: 'output', text: '' },
               { type: 'output', text: 'Installed plugin: viyv-claude-plugin-guide (1.0.0)' },
+              { type: 'output', text: '' },
+              { type: 'command', text: 'npx viyv-claude-plugin setup' },
+              { type: 'output', text: 'Registered marketplace: local-marketplace' },
               { type: 'output', text: '' },
               { type: 'comment', text: 'Claude Code を再起動すると使えるようになります' },
             ]}
@@ -128,7 +130,7 @@ PRの差分を分析し、改善点やバグの可能性を指摘します。
                 <div className={styles.assistantMessage}>
                   <span className={styles.assistantLabel}>Claude</span>
                   <p>skill:cli-install を参照します...</p>
-                  <code>npx viyv-claude-plugin install github:user/repo</code>
+                  <code>npx viyv-claude-plugin install https://github.com/user/repo</code>
                 </div>
               </div>
             </div>
@@ -162,14 +164,17 @@ PRの差分を分析し、改善点やバグの可能性を指摘します。
               { type: 'comment', text: '1. Guide Plugin をインストール' },
               { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
               { type: 'output', text: '' },
-              { type: 'comment', text: '2. 新規プロジェクトを作成' },
+              { type: 'comment', text: '2. マーケットプレイスをセットアップ' },
+              { type: 'command', text: 'npx viyv-claude-plugin setup' },
+              { type: 'output', text: '' },
+              { type: 'comment', text: '3. 新規プロジェクトを作成' },
               { type: 'command', text: 'npx viyv-claude-plugin new my-skills' },
               { type: 'output', text: '' },
-              { type: 'comment', text: '3. Claude Code でスキルを開発（Guide が自動支援）' },
+              { type: 'comment', text: '4. Claude Code でスキルを開発（Guide が自動支援）' },
               { type: 'comment', text: '   「デプロイスキルを作成して」→ 正しい形式で生成' },
               { type: 'output', text: '' },
-              { type: 'comment', text: '4. チームに展開' },
-              { type: 'command', text: 'git push && npx viyv-claude-plugin setup' },
+              { type: 'comment', text: '5. チームに展開' },
+              { type: 'command', text: 'git push' },
             ]}
           />
         </section>

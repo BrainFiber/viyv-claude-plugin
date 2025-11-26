@@ -24,21 +24,31 @@ export default function GettingStarted() {
               <span className={styles.badge}>初回のみ</span>
             </div>
             <p className={styles.text}>
-              最初に1回だけ実行します。ローカルマーケットプレイスをClaude Codeに登録します。
+              最初に1回だけ実行します。Guide Plugin をインストールした後、setup コマンドでマーケットプレイスを登録します。
             </p>
             <Terminal
               title="初回セットアップ"
               lines={[
-                { type: 'command', text: 'npx viyv-claude-plugin setup' },
-                { type: 'output', text: 'Registered marketplace: local-marketplace' },
-                { type: 'output', text: '' },
-                { type: 'comment', text: 'Guide Plugin をインストール（推奨）' },
                 { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
                 { type: 'output', text: 'Installed: viyv-claude-plugin-guide' },
+                { type: 'output', text: '' },
+                { type: 'command', text: 'npx viyv-claude-plugin setup' },
+                { type: 'output', text: 'Registered marketplace: local-marketplace' },
                 { type: 'output', text: '' },
                 { type: 'success', text: 'セットアップ完了!' },
               ]}
             />
+
+            <div className={`${styles.tip} glass`}>
+              <div className={styles.tipIcon}>⚡</div>
+              <div>
+                <h4 className={styles.tipTitle}>Guide Plugin とは？</h4>
+                <p className={styles.tipText}>
+                  Claude Code 内でプラグイン開発のベストプラクティスを教えてくれます。
+                  「スキルを作成して」と言うだけで正しい形式の SKILL.md が生成されます。
+                </p>
+              </div>
+            </div>
           </section>
 
           {/* Step 1: プラグイン作成 */}
@@ -120,26 +130,6 @@ description: Provides document search. Auto-invoke when user mentions: search, �
 - README.md
 - docs/ 配下のファイル
 - ソースコード内のコメント`}</CodeBlock>
-
-            <div className={`${styles.tip} glass`}>
-              <div className={styles.tipIcon}>⚡</div>
-              <div>
-                <h4 className={styles.tipTitle}>Guide Pluginでスキル作成を加速</h4>
-                <p className={styles.tipText}>
-                  <Link href="/guide-plugin">Guide Plugin</Link> をインストールすると、
-                  Claude Code がスキル作成のベストプラクティスを教えてくれます。
-                  「スキルを作成して」と言うだけでOK。
-                </p>
-                <Terminal
-                  title="Guide Pluginのインストール"
-                  className={styles.miniTerminal}
-                  lines={[
-                    { type: 'command', text: 'npx viyv-claude-plugin install https://github.com/BrainFiber/viyv-claude-plugin' },
-                    { type: 'output', text: 'Installed: viyv-claude-plugin-guide' },
-                  ]}
-                />
-              </div>
-            </div>
           </section>
 
           {/* Step 3: インストール */}
