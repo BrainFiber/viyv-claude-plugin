@@ -1,6 +1,6 @@
 {
   "name": "viyv-claude-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool for creating and managing Claude Code plugins",
   "type": "module",
   "main": "./dist/index.js",
