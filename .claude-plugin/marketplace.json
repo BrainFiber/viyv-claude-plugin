@@ -14,6 +14,15 @@
         "name": "Hiroki Takezawa",
         "email": "hiroki.takezawa@brainfiber.net"
       }
+    },
+    {
+      "name": "codex-plan-review",
+      "source": "./plugins/codex-plan-review",
+      "description": "A plugin that uses OpenAI Codex CLI to review and improve implementation plans",
+      "version": "1.0.0",
+      "author": {
+        "name": "viyv-claude"
+      }
     }
   ]
 }
