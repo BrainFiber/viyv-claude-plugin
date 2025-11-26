@@ -57,6 +57,9 @@ export default function Hero() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
+              <Link href="/plugin-howto" className={`${styles.button} ${styles.secondary}`}>
+                Plugin HowTo
+              </Link>
               <Link href="/guide-plugin" className={`${styles.button} ${styles.secondary}`}>
                 Guide Plugin
               </Link>

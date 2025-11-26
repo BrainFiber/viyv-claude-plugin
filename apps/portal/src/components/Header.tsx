@@ -34,8 +34,10 @@ export default function Header() {
           {/* Desktop Nav */}
           <nav className={styles.nav}>
             <Link href="/getting-started" className={`${styles.link} ${pathname === '/getting-started' ? styles.active : ''}`}>Getting Started</Link>
+            <Link href="/plugin-howto" className={`${styles.link} ${pathname === '/plugin-howto' ? styles.active : ''}`}>Plugin HowTo</Link>
             <Link href="/cli" className={`${styles.link} ${pathname === '/cli' ? styles.active : ''}`}>CLI</Link>
             <Link href="/guide-plugin" className={`${styles.link} ${pathname === '/guide-plugin' ? styles.active : ''}`}>Guide Plugin</Link>
+            <Link href="/codex-plan-review" className={`${styles.link} ${pathname === '/codex-plan-review' ? styles.active : ''}`}>Codex Review</Link>
             <Link href="/agent-sdk" className={`${styles.link} ${pathname === '/agent-sdk' ? styles.active : ''}`}>Agent SDK</Link>
             <Link href="/api" className={`${styles.link} ${pathname === '/api' ? styles.active : ''}`}>API</Link>
           </nav>
@@ -73,8 +75,10 @@ export default function Header() {
       <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
         <nav className={styles.mobileNav}>
           <Link href="/getting-started" className={styles.mobileLink}>Getting Started</Link>
+          <Link href="/plugin-howto" className={styles.mobileLink}>Plugin HowTo</Link>
           <Link href="/cli" className={styles.mobileLink}>CLI</Link>
           <Link href="/guide-plugin" className={styles.mobileLink}>Guide Plugin</Link>
+          <Link href="/codex-plan-review" className={styles.mobileLink}>Codex Review</Link>
           <Link href="/agent-sdk" className={styles.mobileLink}>Agent SDK</Link>
           <Link href="/api" className={styles.mobileLink}>API</Link>
         </nav>
