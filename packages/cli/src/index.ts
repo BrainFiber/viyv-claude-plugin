@@ -5,8 +5,10 @@ import { readFile } from 'fs/promises';
 import { resolveMarketplacePath, readMarketplaceName, resolveRootFromMarketplace } from './utils.js';
 import { loadState, saveState } from './state.js';
 import { runClaude } from './exec.js';
-import { fetchSource, detectPluginSource } from './source.js';
+import { fetchSource, detectPluginSource, parseMarketSource, detectSourceKind } from './source.js';
 import { ClaudePluginManagerImpl, getDefaultPluginRoot } from 'viyv-claude-plugin-core';
+
+const DEFAULT_MARKET_URL = process.env.VIYV_MARKET_URL || 'https://viyv-market.vercel.app';
 
 function printHelp() {
   console.log(`Usage: viyv-claude-plugin <command> [options]
@@ -17,9 +19,17 @@ Commands:
   update                Update marketplace from its source
   list                  List installed plugins
   install <source> [name...]  Install plugin(s) from source (all by default)
+                        Sources: dir, zip, github URL, market:plugin-id
   remove <id>           Remove a locally installed plugin
   update-plugin <id>    Re-install a plugin from its original source
   new <name>            Scaffold a marketplace + plugin in current directory
+
+Market Commands:
+  login                 Authenticate with viyv-market
+  logout                Remove stored credentials
+  whoami                Show current authenticated user
+  search <query>        Search plugins on viyv-market
+
   help                  Show this help
 `);
 }
@@ -233,6 +243,14 @@ async function handleInstall(args: string[], flags: Record<string, any>) {
     process.exitCode = 1;
     return;
   }
+
+  // Handle market: source specially
+  const sourceKind = detectSourceKind(source);
+  if (sourceKind === 'market') {
+    await handleMarketInstall(source, flags);
+    return;
+  }
+
   const pluginNames = args.slice(1); // Optional plugin names for marketplace
   const { root } = resolvePaths(flags.path);
   setEnvRoot(root);
@@ -548,6 +566,18 @@ async function main() {
       case 'new':
         await handleNew(args, flags);
         break;
+      case 'login':
+        await handleLogin(flags);
+        break;
+      case 'logout':
+        await handleLogout();
+        break;
+      case 'whoami':
+        await handleWhoami();
+        break;
+      case 'search':
+        await handleSearch(args, flags);
+        break;
       default:
         console.error(`Unknown command: ${command}`);
         printHelp();
@@ -555,6 +585,133 @@ async function main() {
     }
   } catch (err) {
     console.error((err as Error).message);
+    process.exitCode = 1;
+  }
+}
+
+async function handleLogin(flags: Record<string, any>) {
+  const { loginWithLocalhost } = await import('./auth/login.js');
+  const marketUrl = flags.market || DEFAULT_MARKET_URL;
+
+  console.log(`Authenticating with ${marketUrl}...`);
+
+  try {
+    const creds = await loginWithLocalhost(marketUrl);
+    console.log(`\nAuthenticated as @${creds.username}`);
+  } catch (err) {
+    console.error(`Login failed: ${(err as Error).message}`);
+    process.exitCode = 1;
+  }
+}
+
+async function handleLogout() {
+  const { clearCredentials } = await import('./auth/store.js');
+  await clearCredentials();
+  console.log('Logged out successfully.');
+}
+
+async function handleWhoami() {
+  const { loadCredentials } = await import('./auth/store.js');
+  const creds = await loadCredentials();
+
+  if (!creds) {
+    console.log('Not logged in. Run: viyv-claude-plugin login');
+    return;
+  }
+
+  console.log(`Logged in as @${creds.username}`);
+  console.log(`  User ID: ${creds.userId}`);
+  console.log(`  Market: ${creds.marketUrl}`);
+  console.log(`  Expires: ${creds.expiresAt}`);
+}
+
+async function handleSearch(args: string[], flags: Record<string, any>) {
+  const query = args.join(' ');
+  const { loadCredentials } = await import('./auth/store.js');
+  const { MarketClient } = await import('./market/client.js');
+
+  const creds = await loadCredentials();
+  const marketUrl = flags.market || creds?.marketUrl || DEFAULT_MARKET_URL;
+  const client = new MarketClient(marketUrl, creds?.token);
+
+  try {
+    const plugins = await client.searchPlugins(query, { limit: 20 });
+
+    if (plugins.length === 0) {
+      console.log('No plugins found.');
+      return;
+    }
+
+    console.log(`Found ${plugins.length} plugin(s):\n`);
+
+    for (const plugin of plugins) {
+      console.log(`  ${plugin.id} (v${plugin.latest_version || '?.?.?'})`);
+      if (plugin.description) {
+        console.log(`    ${plugin.description.slice(0, 60)}${plugin.description.length > 60 ? '...' : ''}`);
+      }
+      console.log(`    by @${plugin.owner?.username || 'unknown'} | ${plugin.download_count} downloads`);
+      console.log(`    Install: viyv-claude-plugin install market:${plugin.id}`);
+      console.log();
+    }
+  } catch (err) {
+    console.error(`Search failed: ${(err as Error).message}`);
+    process.exitCode = 1;
+  }
+}
+
+async function handleMarketInstall(source: string, flags: Record<string, any>) {
+  const { loadCredentials } = await import('./auth/store.js');
+  const { fetchFromMarket } = await import('./market/download.js');
+
+  const { pluginId, version } = parseMarketSource(source);
+  const creds = await loadCredentials();
+  const marketUrl = flags.market || creds?.marketUrl || DEFAULT_MARKET_URL;
+
+  console.log(`Installing ${pluginId}${version ? `@${version}` : ''} from market...`);
+
+  const { root } = resolvePaths(flags.path);
+  setEnvRoot(root);
+  const manager = new ClaudePluginManagerImpl(root);
+
+  try {
+    const fetch = await fetchFromMarket(marketUrl, pluginId, creds?.token, version);
+
+    try {
+      const detection = await detectPluginSource(fetch.path);
+
+      if (detection.type === 'none') {
+        console.error('Error: Downloaded plugin does not contain plugin.json');
+        process.exitCode = 1;
+        return;
+      }
+
+      if (flags.dryRun) {
+        console.log(`[dry-run] would install plugin "${pluginId}" from market into ${root}`);
+        return;
+      }
+
+      // If force and plugin exists, delete first
+      if (flags.force) {
+        const existing = await manager.get(pluginId);
+        if (existing) await manager.delete(existing.id);
+      }
+
+      const meta = await manager.importFromPath({ path: fetch.path, name: pluginId });
+      const state = await loadState();
+      const installs = state.installs || {};
+      installs[meta.id] = {
+        source,
+        type: 'market',
+        ref: version,
+        lastInstalledAt: new Date().toISOString(),
+      };
+      await saveState({ ...state, marketplacePath: state.marketplacePath || root, installs });
+      console.log(`Installed plugin: ${meta.id} (${meta.version})`);
+    } finally {
+      await fetch.cleanup();
+    }
+  } catch (err) {
+    console.error(`Failed to install from market: ${(err as Error).message}`);
     process.exitCode = 1;
   }
 }

@@ -8,7 +8,7 @@ import AdmZip from 'adm-zip';
 import fsExtra from 'fs-extra';
 const { pathExists, stat, remove } = fsExtra;
 
-export type SourceKind = 'dir' | 'zip-file' | 'zip-url' | 'github' | 'git-url';
+export type SourceKind = 'dir' | 'zip-file' | 'zip-url' | 'github' | 'git-url' | 'market';
 
 export type FetchResult = {
   path: string; // unpacked directory containing .claude-plugin/plugin.json
@@ -16,6 +16,9 @@ export type FetchResult = {
 };
 
 export function detectSourceKind(source: string): SourceKind {
+  // Market source: market:plugin-id
+  if (source.startsWith('market:')) return 'market';
+
   if (source.startsWith('http')) {
     if (source.endsWith('.zip')) return 'zip-url';
     if (source.includes('github.com')) return 'github';
@@ -23,6 +26,13 @@ export function detectSourceKind(source: string): SourceKind {
   }
   if (source.endsWith('.zip')) return 'zip-file';
   return 'dir';
+}
+
+export function parseMarketSource(source: string): { pluginId: string; version?: string } {
+  // market:plugin-id or market:plugin-id@version
+  const withoutPrefix = source.slice('market:'.length);
+  const [pluginId, version] = withoutPrefix.split('@');
+  return { pluginId, version };
 }
 
 async function makeTmpDir(): Promise<string> {

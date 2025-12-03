@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/auth/me/route": "/api/auth/me",
+  "/api/plugins/[slug]/download/route": "/api/plugins/[slug]/download",
+  "/api/plugins/[slug]/route": "/api/plugins/[slug]",
+  "/api/plugins/route": "/api/plugins",
+  "/auth/callback/route": "/auth/callback",
+  "/auth/cli/callback/route": "/auth/cli/callback",
+  "/auth/cli/page": "/auth/cli",
+  "/auth/cli/success/page": "/auth/cli/success",
+  "/auth/login/page": "/auth/login",
+  "/dashboard/page": "/dashboard",
+  "/page": "/",
+  "/plugins/[slug]/page": "/plugins/[slug]",
+  "/plugins/page": "/plugins"
+}

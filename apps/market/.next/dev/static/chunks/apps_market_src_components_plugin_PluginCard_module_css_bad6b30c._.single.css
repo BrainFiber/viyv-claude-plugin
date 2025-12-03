@@ -1,0 +1,83 @@
+/* [project]/apps/market/src/components/plugin/PluginCard.module.css [app-client] (css) */
+.PluginCard-module__xivGTW__card {
+  text-decoration: none;
+  display: block;
+}
+
+.PluginCard-module__xivGTW__content {
+  padding: 1.25rem;
+}
+
+.PluginCard-module__xivGTW__header {
+  align-items: flex-start;
+  gap: .75rem;
+  margin-bottom: .75rem;
+  display: flex;
+}
+
+.PluginCard-module__xivGTW__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.PluginCard-module__xivGTW__titleWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.PluginCard-module__xivGTW__title {
+  color: var(--foreground);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.1rem;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.PluginCard-module__xivGTW__version {
+  color: var(--muted-foreground);
+  font-size: .75rem;
+  font-weight: 500;
+}
+
+.PluginCard-module__xivGTW__description {
+  color: var(--muted-foreground);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.625rem;
+  margin-bottom: 1rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.PluginCard-module__xivGTW__tags {
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.PluginCard-module__xivGTW__footer {
+  justify-content: space-between;
+  align-items: center;
+  font-size: .8rem;
+  display: flex;
+}
+
+.PluginCard-module__xivGTW__author {
+  color: var(--muted-foreground);
+}
+
+.PluginCard-module__xivGTW__stats {
+  align-items: center;
+  gap: 1rem;
+  display: flex;
+}
+
+.PluginCard-module__xivGTW__downloads {
+  font-size: .8rem;
+}
+
+/*# sourceMappingURL=apps_market_src_components_plugin_PluginCard_module_css_bad6b30c._.single.css.map*/

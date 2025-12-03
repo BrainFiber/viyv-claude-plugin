@@ -1,0 +1,90 @@
+/* [project]/apps/market/src/components/layout/Footer.module.css [app-client] (css) */
+.Footer-module__yUqaca__footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding: 4rem 0 2rem;
+}
+
+.Footer-module__yUqaca__container {
+  gap: 3rem;
+  display: grid;
+}
+
+.Footer-module__yUqaca__brand {
+  max-width: 300px;
+}
+
+.Footer-module__yUqaca__logo {
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.Footer-module__yUqaca__logoSub {
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.Footer-module__yUqaca__tagline {
+  color: var(--muted-foreground);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.Footer-module__yUqaca__links {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  display: grid;
+}
+
+.Footer-module__yUqaca__linkGroup h4 {
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+}
+
+.Footer-module__yUqaca__linkGroup a {
+  color: var(--muted-foreground);
+  padding: .375rem 0;
+  font-size: .875rem;
+  transition: color .2s;
+  display: block;
+}
+
+.Footer-module__yUqaca__linkGroup a:hover {
+  color: var(--primary);
+}
+
+.Footer-module__yUqaca__bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+
+.Footer-module__yUqaca__bottom p {
+  color: var(--muted-foreground);
+  font-size: .875rem;
+}
+
+@media (min-width: 768px) {
+  .Footer-module__yUqaca__container {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .Footer-module__yUqaca__links {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+  .Footer-module__yUqaca__links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*# sourceMappingURL=apps_market_src_components_layout_Footer_module_css_bad6b30c._.single.css.map*/

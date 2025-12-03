@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/apps/market/src/components/plugin/PluginGrid.module.css"],"sourcesContent":[".grid {\n  display: grid;\n  grid-template-columns: repeat(1, 1fr);\n  gap: 1.5rem;\n}\n\n@media (min-width: 640px) {\n  .grid {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n@media (min-width: 1024px) {\n  .grid {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}\n\n@media (min-width: 1280px) {\n  .grid {\n    grid-template-columns: repeat(4, 1fr);\n  }\n}\n\n.empty {\n  text-align: center;\n  padding: 4rem 2rem;\n  color: var(--muted-foreground);\n}\n\n.emptyIcon {\n  font-size: 3rem;\n  display: block;\n  margin-bottom: 1rem;\n}\n\n.empty h3 {\n  font-size: 1.25rem;\n  color: var(--foreground);\n  margin-bottom: 0.5rem;\n}\n\n.empty p {\n  font-size: 0.95rem;\n}\n"],"names":[],"mappings":"AAAA;;;;;;AAMA;EACE;;;;;AAKF;EACE;;;;;AAKF;EACE;;;;;AAKF;;;;;;AAMA;;;;;;AAMA;;;;;;AAMA"}}]
+}

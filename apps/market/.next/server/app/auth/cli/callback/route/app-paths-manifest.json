@@ -1,0 +1,3 @@
+{
+  "/auth/cli/callback/route": "app/auth/cli/callback/route.js"
+}

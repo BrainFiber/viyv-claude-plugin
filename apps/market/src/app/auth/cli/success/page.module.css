@@ -1,0 +1,82 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height) - 200px);
+  padding: 2rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: 3rem 2.5rem;
+  text-align: center;
+}
+
+.checkmark {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--success);
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+}
+
+.card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--success);
+}
+
+.card p {
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+}
+
+.tokenBox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #1a1a24;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+}
+
+.token {
+  flex: 1;
+  font-family: var(--font-fira-code), monospace;
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  word-break: break-all;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.copyButton:hover {
+  background: var(--primary-hover);
+}
+
+.warning {
+  font-size: 0.8rem;
+  color: var(--warning);
+}

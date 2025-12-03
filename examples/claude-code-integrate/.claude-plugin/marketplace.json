@@ -1,0 +1,29 @@
+{
+  "name": "local-marketplace",
+  "owner": {
+    "name": "Local Dev",
+    "email": ""
+  },
+  "plugins": [
+    {
+      "name": "get-weather-4",
+      "source": "./plugins/get-weather-4",
+      "description": "New plugin scaffold",
+      "version": "0.1.0",
+      "author": {
+        "name": "Local Dev",
+        "email": ""
+      }
+    },
+    {
+      "name": "highway-traffic",
+      "source": "./plugins/highway-traffic",
+      "description": "日本の高速道路の混雑状況を取得するスキルを提供するプラグイン",
+      "version": "1.0.0",
+      "author": {
+        "name": "Local Dev",
+        "email": ""
+      }
+    }
+  ]
+}

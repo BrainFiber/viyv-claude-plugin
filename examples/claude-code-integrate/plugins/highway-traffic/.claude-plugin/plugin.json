@@ -1,0 +1,5 @@
+{
+  "name": "highway-traffic",
+  "version": "1.0.0",
+  "description": "日本の高速道路の混雑状況を取得するスキルを提供するプラグイン"
+}

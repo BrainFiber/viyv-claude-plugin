@@ -1,0 +1,9 @@
+{
+  "name": "get-weather-4",
+  "description": "New plugin scaffold",
+  "version": "0.1.0",
+  "author": {
+    "name": "Local Dev",
+    "email": ""
+  }
+}

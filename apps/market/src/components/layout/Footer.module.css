@@ -1,0 +1,87 @@
+.footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  padding: 4rem 0 2rem;
+  margin-top: 4rem;
+}
+
+.container {
+  display: grid;
+  gap: 3rem;
+}
+
+.brand {
+  max-width: 300px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.logoSub {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.tagline {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.linkGroup h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.linkGroup a {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  padding: 0.375rem 0;
+  transition: color 0.2s ease;
+}
+
+.linkGroup a:hover {
+  color: var(--primary);
+}
+
+.bottom {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.bottom p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .links {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+  .links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

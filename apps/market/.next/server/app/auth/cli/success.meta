@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/auth/layout,_N_T_/auth/cli/layout,_N_T_/auth/cli/success/layout,_N_T_/auth/cli/success/page,_N_T_/auth/cli/success"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/auth/cli/success/__PAGE__",
+    "/auth/cli/success",
+    "/auth/cli",
+    "/auth",
+    "/_index",
+    "/_head"
+  ]
+}
